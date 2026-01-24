@@ -1,0 +1,4 @@
+{"id":"0c05f19f74df4562c0a6a370e3f690af","type":"flow","start":1767800598407,"name":"aiStyleAdvisorFlow","end":1767800598910.8445,"status":2}
+{"id":"e49c4e47bea423e4dd09150ed9438f75","type":"executable-prompt","start":1767800634589,"name":"aiStyleAdvisorPrompt","end":1767800634607.0942,"status":0,"genkitx:ignore-trace":"true"}
+{"id":"dbbfcd16c9ab49bac7057baa9f791f23","type":"executable-prompt","start":1767800649256,"name":"aiStyleAdvisorPrompt","end":1767800649268.5283,"status":0,"genkitx:ignore-trace":"true"}
+{"id":"d73e5a89ccaf0c0d4c0a68af53e647a6","type":"util","start":1767800650420,"name":"generate","end":1767800652049.4724,"status":2}

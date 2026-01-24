@@ -1,0 +1,34 @@
+{
+  "placeholderImages": [
+    {
+      "id": "suit-category",
+      "description": "A classic, well-tailored suit.",
+      "imageUrl": "https://images.unsplash.com/photo-1593032583812-a79a3f1a07a4?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwyfHxzdWl0fGVufDB8fHx8MTc3MDE3MTg2N3ww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man suit"
+    },
+    {
+      "id": "blazer-category",
+      "description": "A stylish and versatile blazer.",
+      "imageUrl": "https://images.unsplash.com/photo-1617137968427-85924c800a22?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxibGF6ZXJ8ZW58MHx8fHwxNzcwMTcxOTMwfDA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man blazer"
+    },
+    {
+      "id": "trouser-category",
+      "description": "Perfectly fitted trousers.",
+      "imageUrl": "https://images.unsplash.com/photo-1604176255249-2f5de435ade7?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx0cm91c2Vyc3xlbnwwfHx8fDE3NzAxNzE5NTV8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man trousers"
+    },
+    {
+      "id": "shirt-category",
+      "description": "A crisp, tailored dress shirt.",
+      "imageUrl": "https://images.unsplash.com/photo-1596755094514-5b2d2874b77f?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHxzaGlydHxlbnwwfHx8fDE3NzAxNzIwMTB8MA&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man shirt"
+    },
+    {
+      "id": "vest-category",
+      "description": "An elegant tailored vest.",
+      "imageUrl": "https://images.unsplash.com/photo-1542107736-651b9d453675?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w3NDE5ODJ8MHwxfHNlYXJjaHwxfHx2ZXN0fGVufDB8fHx8MTc3MDE3MjA2OXww&ixlib=rb-4.1.0&q=80&w=1080",
+      "imageHint": "man vest"
+    }
+  ]
+}

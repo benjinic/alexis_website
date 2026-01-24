@@ -1,0 +1,15 @@
+{
+  "projects": {
+    "default": "alexis-tailor-system-2025"
+  },
+  "targets": {
+    "alexis-tailor-system-2025": {
+      "hosting": {
+        "tailor-app": [
+          "alexis-bespoke"
+        ]
+      }
+    }
+  },
+  "etags": {}
+}

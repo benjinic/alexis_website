@@ -1,0 +1,73 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* 預設直接使用深色主題 (Concrete Noir) */
+    --background: 0 0% 4%; /* Deep Noir #0a0a0a */
+    --foreground: 0 0% 95%; /* Off-white text */
+
+    --card: 0 0% 4%;
+    --card-foreground: 0 0% 95%;
+
+    --popover: 0 0% 4%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 43 64% 52%; /* Champagne Gold #D4AF37 */
+    --primary-foreground: 0 0% 4%; /* Black text on Gold */
+
+    --secondary: 0 0% 15%; /* Dark Grey for secondary actions */
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 10%;
+    --muted-foreground: 0 0% 55%; /* Concrete Grey #8c8c8c for subtitles */
+
+    --accent: 43 64% 52%;
+    --accent-foreground: 0 0% 4%;
+
+    --destructive: 270 100% 30%; /* Royal Purple for Rebellion/Signal */
+    --destructive-foreground: 0 0% 95%;
+
+    --border: 0 0% 20%; /* Subtle dark borders */
+    --input: 0 0% 20%;
+    --ring: 43 64% 52%; /* Gold focus rings */
+
+    --radius: 0rem; /* 工業風：絕對直角 */
+
+    /* Chart colors - matched to brand */
+    --chart-1: 43 64% 52%; /* Gold */
+    --chart-2: 0 0% 55%;   /* Concrete */
+    --chart-3: 270 100% 30%; /* Purple */
+    --chart-4: 0 0% 30%;
+    --chart-5: 0 0% 80%;
+  }
+
+  /* 即使系統切換到 light mode，我們也強制保持深色風格，
+     但如果未來需要真正的 light mode，可以保留此區塊並調整顏色 */
+  .dark {
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+    /* ... (values are same as root for enforced dark theme) */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground font-mono; /* 預設使用等寬字體 */
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+  
+  /* 自定義選取顏色 */
+  ::selection {
+    @apply bg-primary/30 text-primary-foreground;
+  }
+}
+
+/* Utility Class for Concrete Texture (Optional) */
+.bg-concrete-texture {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E");
+}
