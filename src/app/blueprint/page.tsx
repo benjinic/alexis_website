@@ -1,161 +1,158 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Loader2, ShieldAlert, CheckCircle2 } from 'lucide-react';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { ArrowLeft, ArrowRight, Check } from 'lucide-react';
+import { useBlueprintStore } from '@/store/useBlueprintStore';
+import { Fabric } from '@/types/blueprint';
 
-export default function BlueprintPage() {
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [email, setEmail] = useState('');
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [accessGranted, setAccessGranted] = useState(false);
+export default function BlueprintStudio() {
+  // 從 Store 讀取狀態
+  const { step, config, setFabric, nextStep, prevStep } = useBlueprintStore();
+  
+  // 本地狀態：布料列表
+  const [fabrics, setFabrics] = useState<Fabric[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  // 模擬系統初始化載入效果
+  // 載入布料 API
   useEffect(() => {
-    const interval = setInterval(() => {
-      setLoadingProgress((prev) => {
-        if (prev >= 98) {
-          clearInterval(interval);
-          return 98; // 故意停在 98%，等待用戶輸入 Email
-        }
-        // 隨機增加進度，模擬真實運算
-        return prev + Math.floor(Math.random() * 5) + 1;
-      });
-    }, 150);
-    return () => clearInterval(interval);
+    let active = true;
+
+    async function fetchFabrics() {
+      try {
+        const res = await fetch('/api/fabrics');
+        if (!res.ok) throw new Error('Failed to fetch fabrics');
+        const data = await res.json();
+        if (active) setFabrics(data.fabrics || []);
+      } catch (err) {
+        if (active) setError((err as Error).message);
+      } finally {
+        if (active) setLoading(false);
+      }
+    }
+    fetchFabrics();
+    return () => {
+      active = false;
+    };
   }, []);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-
-    setIsSubmitting(true);
-    
-    // 模擬 API 請求延遲
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    // 成功後狀態切換
-    setIsSubmitting(false);
-    setAccessGranted(true);
-    // TODO: 這裡未來要串接 Firebase 將 Email 寫入 Firestore 的 'leads' 集合
+  // 處理布料選擇
+  const handleSelectFabric = (fabric: Fabric) => {
+    setFabric(fabric); // 1. 存入 Store
+    nextStep();        // 2. 自動跳下一步
   };
 
   return (
-    <main className="relative min-h-screen w-full overflow-hidden bg-deep-noir text-white flex flex-col items-center justify-center p-4">
+    <div className="min-h-screen bg-neutral-900 text-white flex flex-col">
       
-      {/* 背景裝飾層 */}
-      <div className="absolute inset-0 pointer-events-none">
-        {/* 掃描線效果 */}
-        <div className="absolute inset-0 bg-[linear-gradient(rgba(18,16,16,0)_50%,rgba(0,0,0,0.25)_50%),linear-gradient(90deg,rgba(255,0,0,0.06),rgba(0,255,0,0.02),rgba(0,0,255,0.06))] z-[1] bg-[length:100%_2px,3px_100%] pointer-events-none" />
-        {/* 網格背景 */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#80808012_1px,transparent_1px),linear-gradient(to_bottom,#80808012_1px,transparent_1px)] bg-[size:24px_24px]" />
-      </div>
-
-      <div className="relative z-10 w-full max-w-3xl border border-white/10 bg-black/80 backdrop-blur-md p-8 md:p-12 shadow-2xl">
-        
-        {/* 頂部狀態列 */}
-        <div className="flex justify-between items-center mb-12 font-mono text-xs md:text-sm text-concrete-grey tracking-widest border-b border-white/10 pb-4">
-          <div className="flex items-center gap-2">
-            <span className="relative flex h-2 w-2">
-              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
-              <span className="relative inline-flex rounded-full h-2 w-2 bg-red-500"></span>
-            </span>
-            SYSTEM INITIALIZING
+      {/* 頂部導航列 */}
+      <header className="h-16 border-b border-white/10 flex items-center px-8 bg-neutral-900 z-50">
+        <Link href="/" className="text-gray-400 hover:text-white flex items-center gap-2 text-sm tracking-widest">
+          <ArrowLeft className="w-4 h-4" /> ATELIER
+        </Link>
+        <div className="ml-auto flex items-center gap-8">
+          <div className="flex gap-2">
+            {[1, 2, 3].map((s) => (
+              <div key={s} className={`h-1 w-8 rounded-full ${step >= s ? 'bg-yellow-600' : 'bg-gray-800'}`} />
+            ))}
           </div>
-          <div>PROTOCOL: V1.0-BETA</div>
+          <span className="font-serif text-yellow-600 tracking-widest">STEP {step} / 3</span>
         </div>
+      </header>
 
-        {/* 核心內容區 */}
-        <div className="text-center space-y-8">
-          
-          {/* 標題與旋轉線框 (用 CSS animation 模擬) */}
-          <div className="relative inline-block mb-4">
-             <div className="absolute -inset-8 bg-champagne-gold/20 blur-3xl rounded-full opacity-20 animate-pulse" />
-             <h1 className="relative font-playfair text-4xl md:text-6xl lg:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-b from-champagne-gold to-yellow-700 leading-tight">
-               THE BLUEPRINT
-             </h1>
-          </div>
+      {/* 主要內容區 - 根據 Step 切換顯示 */}
+      <main className="flex-1 overflow-y-auto p-8">
+        
+        {/* STEP 1: 選布料 */}
+        {step === 1 && (
+          <div className="max-w-7xl mx-auto animate-in fade-in slide-in-from-bottom-4 duration-500">
+            <h1 className="text-4xl font-light mb-2">Select Your Fabric</h1>
+            <p className="text-gray-500 mb-8">The foundation of your masterpiece.</p>
 
-          <p className="font-mono text-concrete-grey text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-            The ultimate bespoke configurator is currently laid on the cutting table. 
-            <br className="hidden md:block" />
-            Only the patient will be armed first.
-          </p>
-
-          {/* 進度條與狀態 */}
-          {!accessGranted && (
-            <div className="w-full max-w-md mx-auto space-y-2">
-              <div className="flex justify-between text-xs font-mono text-champagne-gold">
-                <span>LOADING ASSETS...</span>
-                <span>{loadingProgress}%</span>
-              </div>
-              <div className="h-1 w-full bg-white/10 overflow-hidden">
-                <div 
-                  className="h-full bg-champagne-gold transition-all duration-300 ease-out"
-                  style={{ width: `${loadingProgress}%` }}
-                />
-              </div>
-              <p className="text-right text-[10px] text-red-500 font-mono animate-pulse">
-                {loadingProgress >= 98 ? '> ACCESS RESTRICTED: ID REQUIRED' : '> DECRYPTING PACKETS...'}
-              </p>
-            </div>
-          )}
-
-          {/* 表單區塊 */}
-          <div className="mt-12 w-full max-w-md mx-auto">
-            {accessGranted ? (
-              <div className="border border-green-500/30 bg-green-500/10 p-6 text-center animate-in fade-in zoom-in duration-500">
-                <CheckCircle2 className="w-12 h-12 text-green-500 mx-auto mb-4" />
-                <h3 className="text-xl font-bold text-white mb-2">CLEARANCE GRANTED</h3>
-                <p className="text-sm text-concrete-grey font-mono">
-                  You have been added to the priority access list. 
-                  <br/>Stand by for encrypted transmission.
+            {loading ? (
+              <div className="text-center py-20 text-gray-500 animate-pulse">Loading Fabric Library...</div>
+            ) : error ? (
+              <div className="text-center py-20 text-red-400 font-mono">{error}</div>
+            ) : fabrics.length === 0 ? (
+              <div className="text-center py-20 border border-dashed border-gray-700 rounded-lg">
+                <p className="text-xl text-gray-400">No fabrics available online.</p>
+                <p className="text-sm text-gray-600 mt-2">
+                  (Please check Firebase: inventory collection needs 'isOnline: true')
                 </p>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className={`space-y-4 transition-opacity duration-1000 ${loadingProgress < 98 ? 'opacity-50 pointer-events-none' : 'opacity-100'}`}>
-                <div className="space-y-2 text-left">
-                  <label htmlFor="email" className="text-xs font-mono text-concrete-grey ml-1">
-                    {'>'} ENTER IDENTIFICATION (EMAIL)
-                  </label>
-                  <Input 
-                    id="email"
-                    type="email" 
-                    placeholder="agent@example.com"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    required
-                    className="bg-black/50 border-white/20 text-white placeholder:text-white/20 rounded-none h-12 focus-visible:ring-champagne-gold font-mono"
-                  />
-                </div>
-                <Button 
-                  type="submit" 
-                  disabled={isSubmitting}
-                  className="w-full bg-champagne-gold text-deep-noir hover:bg-white hover:text-deep-noir rounded-none h-12 font-bold tracking-widest text-sm transition-all duration-300"
-                >
-                  {isSubmitting ? (
-                    <span className="flex items-center gap-2">
-                      <Loader2 className="w-4 h-4 animate-spin" /> VERIFYING...
-                    </span>
-                  ) : (
-                    'REQUEST PRIORITY CLEARANCE'
-                  )}
-                </Button>
-              </form>
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {fabrics.map((fabric) => (
+                  <button
+                    key={fabric.id}
+                    onClick={() => handleSelectFabric(fabric)}
+                    disabled={fabric.inStock === false}
+                    className={`group relative text-left bg-neutral-800 border border-white/5 hover:border-yellow-600/50 transition-all duration-300 ${fabric.inStock === false ? 'opacity-50 grayscale cursor-not-allowed' : ''}`}
+                  >
+                    <div className="aspect-[4/3] overflow-hidden bg-neutral-700 relative">
+                       <img src={fabric.imageUrl} alt={fabric.name} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
+                       <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
+                         <span className="border border-white/30 px-6 py-2 tracking-widest text-sm bg-black/50 backdrop-blur-sm">SELECT</span>
+                       </div>
+                       {fabric.inStock === false && (
+                         <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                           <span className="text-red-500 font-bold tracking-widest border border-red-500 px-3 py-1">SOLD OUT</span>
+                         </div>
+                       )}
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-bold text-lg text-white">{fabric.name}</h3>
+                      <div className="flex justify-between items-center mt-2">
+                        <span className="text-xs text-gray-400 uppercase tracking-wider">{fabric.category || 'Fabric'}</span>
+                        <span className="text-yellow-600 font-mono">${fabric.price.toLocaleString()}</span>
+                      </div>
+                    </div>
+                    {config.fabric?.id === fabric.id && (
+                      <div className="absolute top-3 right-3 bg-yellow-600 text-black rounded-full p-1">
+                        <Check className="w-4 h-4" />
+                      </div>
+                    )}
+                  </button>
+                ))}
+              </div>
             )}
           </div>
+        )}
 
+        {/* STEP 2: 選剪裁 (暫時顯示，下一步我們來做這個) */}
+        {step === 2 && (
+          <div className="max-w-4xl mx-auto text-center py-20 animate-in fade-in slide-in-from-right-8">
+            <h2 className="text-3xl font-serif text-yellow-600 mb-4">Architecture & Cut</h2>
+            <p className="text-gray-400 mb-8">
+              Selected Fabric: <span className="text-white">{config.fabric?.name}</span>
+            </p>
+            <div className="p-8 border border-dashed border-gray-700 rounded-lg">
+              <p className="text-xl text-gray-500">Styling options coming next...</p>
+            </div>
+            <button onClick={prevStep} className="mt-8 text-gray-400 hover:text-white underline">
+              Back to Fabrics
+            </button>
+          </div>
+        )}
+
+      </main>
+
+      {/* 底部狀態列 (Sticky Footer) */}
+      <footer className="h-20 bg-neutral-900 border-t border-white/10 flex items-center px-8 justify-between">
+        <div className="flex flex-col">
+           <span className="text-xs text-gray-500 uppercase tracking-widest">Estimated Total</span>
+           <span className="text-2xl font-mono text-white">
+             ${(config.fabric?.price || 0).toLocaleString()}
+           </span>
         </div>
-
-        {/* 底部法律宣告 */}
-        <div className="mt-16 text-center">
-           <p className="text-[10px] text-white/20 font-mono">
-             SECURE CONNECTION ESTABLISHED. UNAUTHORIZED ACCESS WILL BE LOGGED.
-           </p>
-        </div>
-
-      </div>
-    </main>
+        
+        {step > 1 && (
+           <button className="bg-white text-black px-8 py-3 font-bold tracking-widest hover:bg-yellow-600 transition-colors">
+             CONTINUE
+           </button>
+        )}
+      </footer>
+    </div>
   );
 }
