@@ -1,0 +1,33 @@
+# --- 依賴套件 (絕對不能上傳) ---
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# --- Next.js 編譯檔案 (這些是生成的，不需要備份) ---
+.next/
+out/
+build/
+dist/
+
+# --- 安全性 (絕對不能上傳私鑰！) ---
+.env
+.env.local
+.env.*.local
+.DS_Store
+
+# --- Firebase ---
+firebase-debug.log
+.firebase/
+
+# --- IDE 設定 ---
+.vscode/
+.idea/
+
+# Security
+.env
+*.json
+!package.json
+!tsconfig.json
+!components.json
+# (如果您的專案中有其他必要的 json 設定檔，請排除它們，或者明確指定要忽略的金鑰檔名，如：)
+alexis-tailor-system-*.json

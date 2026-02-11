@@ -1,0 +1,114 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* --- 核心色調：強制深色系 (Dark Industrial) --- */
+    
+    /* 背景色：極致深黑 (Stone 950) */
+    --background: 24 9.8% 10%;
+    /* 文字色：米白 (Stone 50) */
+    --foreground: 60 9.1% 97.8%;
+
+    /* 卡片背景：深灰 (Stone 900) */
+    --card: 24 9.8% 10%;
+    --card-foreground: 60 9.1% 97.8%;
+ 
+    /* 彈出視窗背景 */
+    --popover: 24 9.8% 10%;
+    --popover-foreground: 60 9.1% 97.8%;
+ 
+    /* 🔴 修改：主色調改為 #261132 (Midnight Violet) */
+    /* HSL 轉換: 278deg, 49%, 13% */
+    --primary: 278 49% 13%; 
+    --primary-foreground: 60 9.1% 97.8%; /* 保持亮色文字以確保在深紫背景上的對比 */
+ 
+    /* 次要色調：深灰 (Stone 800) */
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+ 
+    /* 靜音色調：用於副標題 */
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+ 
+    /* 強調色 */
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+ 
+    /* 破壞性/錯誤色 */
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+
+    /* 邊框與輸入框 */
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    
+    /* 🔴 修改：聚焦光圈改為 #261132 */
+    --ring: 278 49% 13%;
+ 
+    /* 圓角：0rem (完全直角，強調工業感) */
+    --radius: 0rem;
+ 
+    /* 圖表配色 (保留 Shadcn 預設) */
+    --chart-1: 220 70% 50%;
+    --chart-2: 160 60% 45%;
+    --chart-3: 30 80% 55%;
+    --chart-4: 280 65% 60%;
+    --chart-5: 340 75% 55%;
+  }
+ 
+  /* 即使瀏覽器設為 Light Mode，這裡也強制保持深色風格的一致性 */
+  .dark {
+    --background: 24 9.8% 10%;
+    --foreground: 60 9.1% 97.8%;
+    --card: 24 9.8% 10%;
+    --card-foreground: 60 9.1% 97.8%;
+    --popover: 24 9.8% 10%;
+    --popover-foreground: 60 9.1% 97.8%;
+    
+    /* 🔴 修改：主色調改為 #261132 */
+    --primary: 278 49% 13%;
+    --primary-foreground: 60 9.1% 97.8%;
+    
+    --secondary: 12 6.5% 15.1%;
+    --secondary-foreground: 60 9.1% 97.8%;
+    --muted: 12 6.5% 15.1%;
+    --muted-foreground: 24 5.4% 63.9%;
+    --accent: 12 6.5% 15.1%;
+    --accent-foreground: 60 9.1% 97.8%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 60 9.1% 97.8%;
+    --border: 12 6.5% 15.1%;
+    --input: 12 6.5% 15.1%;
+    
+    /* 🔴 修改：聚焦光圈改為 #261132 */
+    --ring: 278 49% 13%;
+  }
+}
+ 
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  /* --- 客製化捲軸 (Custom Scrollbar) --- */
+  /* 讓捲軸變細且顏色融入背景 */
+  ::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0c0a09; /* Stone 950 */
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #44403c; /* Stone 700 */
+    border-radius: 0px;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #57534e; /* Stone 600 */
+  }
+}
