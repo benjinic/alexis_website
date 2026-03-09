@@ -31,3 +31,8 @@ firebase-debug.log
 !components.json
 # (如果您的專案中有其他必要的 json 設定檔，請排除它們，或者明確指定要忽略的金鑰檔名，如：)
 alexis-tailor-system-*.json
+service-account.json
+
+# Playwright
+playwright-report/
+test-results/

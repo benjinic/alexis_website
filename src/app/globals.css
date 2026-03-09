@@ -1,114 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700&family=Orbitron:wght@400;500;600;700;800;900&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
   :root {
-    /* --- 核心色調：強制深色系 (Dark Industrial) --- */
-    
-    /* 背景色：極致深黑 (Stone 950) */
-    --background: 24 9.8% 10%;
-    /* 文字色：米白 (Stone 50) */
-    --foreground: 60 9.1% 97.8%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
 
-    /* 卡片背景：深灰 (Stone 900) */
-    --card: 24 9.8% 10%;
-    --card-foreground: 60 9.1% 97.8%;
- 
-    /* 彈出視窗背景 */
-    --popover: 24 9.8% 10%;
-    --popover-foreground: 60 9.1% 97.8%;
- 
-    /* 🔴 修改：主色調改為 #261132 (Midnight Violet) */
-    /* HSL 轉換: 278deg, 49%, 13% */
-    --primary: 278 49% 13%; 
-    --primary-foreground: 60 9.1% 97.8%; /* 保持亮色文字以確保在深紫背景上的對比 */
- 
-    /* 次要色調：深灰 (Stone 800) */
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
- 
-    /* 靜音色調：用於副標題 */
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
- 
-    /* 強調色 */
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
- 
-    /* 破壞性/錯誤色 */
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 95%;
 
-    /* 邊框與輸入框 */
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    
-    /* 🔴 修改：聚焦光圈改為 #261132 */
-    --ring: 278 49% 13%;
- 
-    /* 圓角：0rem (完全直角，強調工業感) */
-    --radius: 0rem;
- 
-    /* 圖表配色 (保留 Shadcn 預設) */
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 95%;
+
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 4%;
+
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 95%;
+
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+
+    --accent: 0 85% 55%;
+    --accent-foreground: 0 0% 100%;
+
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 0 0% 18%;
+    --input: 0 0% 12%;
+    --ring: 0 85% 55%;
+
+    --radius: 0.25rem;
+
+    /* Custom tokens */
+    --carbon: 0 0% 4%;
+    --carbon-light: 0 0% 8%;
+    --carbon-lighter: 0 0% 12%;
+    --lava: 0 85% 55%;
+    --lava-glow: 0 85% 65%;
+    --terminal-green: 142 70% 45%;
+    --ice: 200 15% 85%;
+    --steel: 0 0% 35%;
+
+    /* Gradients */
+    --gradient-lava: linear-gradient(135deg, hsl(0 85% 55%), hsl(15 90% 50%));
+    --gradient-carbon: linear-gradient(180deg, hsl(0 0% 8%), hsl(0 0% 4%));
+    --gradient-scan: linear-gradient(180deg, transparent, hsl(0 85% 55% / 0.3), transparent);
+
+    /* Shadows */
+    --shadow-lava: 0 0 30px hsl(0 85% 55% / 0.4);
+    --shadow-glow: 0 0 60px hsl(0 85% 55% / 0.2);
+
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 85% 55%;
   }
- 
-  /* 即使瀏覽器設為 Light Mode，這裡也強制保持深色風格的一致性 */
+
   .dark {
-    --background: 24 9.8% 10%;
-    --foreground: 60 9.1% 97.8%;
-    --card: 24 9.8% 10%;
-    --card-foreground: 60 9.1% 97.8%;
-    --popover: 24 9.8% 10%;
-    --popover-foreground: 60 9.1% 97.8%;
-    
-    /* 🔴 修改：主色調改為 #261132 */
-    --primary: 278 49% 13%;
-    --primary-foreground: 60 9.1% 97.8%;
-    
-    --secondary: 12 6.5% 15.1%;
-    --secondary-foreground: 60 9.1% 97.8%;
-    --muted: 12 6.5% 15.1%;
-    --muted-foreground: 24 5.4% 63.9%;
-    --accent: 12 6.5% 15.1%;
-    --accent-foreground: 60 9.1% 97.8%;
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 60 9.1% 97.8%;
-    --border: 12 6.5% 15.1%;
-    --input: 12 6.5% 15.1%;
-    
-    /* 🔴 修改：聚焦光圈改為 #261132 */
-    --ring: 278 49% 13%;
+    --background: 0 0% 4%;
+    --foreground: 0 0% 95%;
+    --card: 0 0% 6%;
+    --card-foreground: 0 0% 95%;
+    --popover: 0 0% 6%;
+    --popover-foreground: 0 0% 95%;
+    --primary: 0 0% 95%;
+    --primary-foreground: 0 0% 4%;
+    --secondary: 0 0% 12%;
+    --secondary-foreground: 0 0% 95%;
+    --muted: 0 0% 15%;
+    --muted-foreground: 0 0% 55%;
+    --accent: 0 85% 55%;
+    --accent-foreground: 0 0% 100%;
+    --destructive: 0 85% 55%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 0 0% 18%;
+    --input: 0 0% 12%;
+    --ring: 0 85% 55%;
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 95%;
+    --sidebar-primary: 0 85% 55%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 0 0% 12%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 0 0% 18%;
+    --sidebar-ring: 0 85% 55%;
   }
 }
- 
+
 @layer base {
   * {
     @apply border-border;
   }
+
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-foreground font-mono;
+  }
+}
+
+@layer components {
+  .terminal-text {
+    @apply font-mono uppercase tracking-[0.25em] text-xs;
   }
 
-  /* --- 客製化捲軸 (Custom Scrollbar) --- */
-  /* 讓捲軸變細且顏色融入背景 */
-  ::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+  .terminal-heading {
+    font-family: 'Orbitron', monospace;
+    @apply uppercase tracking-[0.3em] font-bold;
   }
-  ::-webkit-scrollbar-track {
-    background: #0c0a09; /* Stone 950 */
+
+  .glow-lava {
+    box-shadow: var(--shadow-lava);
   }
-  ::-webkit-scrollbar-thumb {
-    background: #44403c; /* Stone 700 */
-    border-radius: 0px;
+
+  .text-glow {
+    text-shadow: 0 0 20px hsl(var(--lava) / 0.6);
   }
-  ::-webkit-scrollbar-thumb:hover {
-    background: #57534e; /* Stone 600 */
+}
+
+@layer utilities {
+  @keyframes scan {
+    0% {
+      transform: translateY(-100%);
+    }
+    100% {
+      transform: translateY(100%);
+    }
+  }
+
+  @keyframes pulse-glow {
+    0%, 100% {
+      opacity: 0.4;
+    }
+    50% {
+      opacity: 0.8;
+    }
+  }
+
+  @keyframes flicker {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.95; }
+    75% { opacity: 0.98; }
+  }
+
+  @keyframes data-stream {
+    0% { background-position: 0 0; }
+    100% { background-position: 0 100%; }
+  }
+
+  .animate-scan {
+    animation: scan 3s linear infinite;
+  }
+
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite;
+  }
+
+  .animate-flicker {
+    animation: flicker 0.15s infinite;
+  }
+
+  .animate-data-stream {
+    animation: data-stream 20s linear infinite;
   }
 }

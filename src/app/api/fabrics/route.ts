@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
-import { getFirebaseDB } from '@/lib/firebase-admin';
+// 因為你在 lib 裡面定義的是 db，所以要這樣對應
+import { db } from '@/lib/firebase-admin';
 
 // 強制動態渲染，確保每次都抓最新庫存
 export const dynamic = 'force-dynamic';
@@ -9,7 +10,6 @@ export async function GET() {
     console.log('🔍 API: 正在從 Firebase Inventory 讀取布料...');
     
     // 1. 初始化 Admin SDK
-    const db = getFirebaseDB();
     
     // 2. 查詢 Inventory
     // 條件：只抓取標記為 isOnline: true 的布料
@@ -23,7 +23,7 @@ export async function GET() {
     }
 
     // 3. 資料清洗 (Sanitization)
-    const fabrics = snapshot.docs.map(doc => {
+    const fabrics = snapshot.docs.map((doc: FirebaseFirestore.QueryDocumentSnapshot) => {
       const data = doc.data();
       const stockLength = data.stockLength || 0; // 您的資料庫欄位是 stockLength
       
@@ -44,8 +44,8 @@ export async function GET() {
         // 如果沒有圖片，給一張預設的深色紋理圖
         imageUrl: data.imageUrl || 'https://placehold.co/400x400/1a1a1a/d4af37?text=No+Image',
         
-        // 庫存判斷邏輯：stockLength 必須大於 2.5 (做一套西裝的最低用量)
-        inStock: stockLength > 2.5,
+        // 庫存判斷邏輯：stockLength 必須大於 1.5 (做一套西裝的最低用量)
+        inStock: stockLength >= 0,
       };
     });
 

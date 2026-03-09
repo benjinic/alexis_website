@@ -40,18 +40,29 @@ export const aiStyleAdvisorFlow = ai.defineFlow(
       IMPORTANT: You must return a valid JSON object matching the requested schema exactly.
     `;
 
-    // 呼叫 AI
-    const llmResponse = await ai.generate({
-      // 修正點：加上 -001 後綴
-      model: 'vertexai/gemini-2.0-flash-001', 
-      prompt: prompt,
-      output: { schema: StyleAdvisorOutputSchema }, 
-    });
+    try {
+      // 呼叫 AI
+      const llmResponse = await ai.generate({
+        model: 'vertexai/gemini-2.0-flash-001', 
+        prompt: prompt,
+        output: { schema: StyleAdvisorOutputSchema }, 
+      });
 
-    if (!llmResponse.output) {
-      throw new Error("AI failed to generate a response.");
+      if (!llmResponse.output) {
+        throw new Error("AI failed to generate a response. Output is empty.");
+      }
+
+      return llmResponse.output;
+
+    } catch (error: any) {
+      // 🔴 裝上行車紀錄器：如果發生 JSON 錯誤，把 Vertex AI 真實的嘴臉印出來！
+      console.error("🔥 [AI CORE CRASH] Vertex AI 呼叫失敗！");
+      console.error("錯誤名稱:", error.name);
+      console.error("錯誤訊息:", error.message);
+      if (error.response) {
+         console.error("總部真實回傳內容:", error.response);
+      }
+      throw new Error("Protocol Failed: AI Core offline.");
     }
-
-    return llmResponse.output;
   }
 );
