@@ -6,11 +6,11 @@
 
 ## 🔎 Current Status
 
-目前生產環境已完成最新全量部署，`/visual-intelligence` 與 `/api/look-analysis` 線上 smoke test 均回 `200`。部署流程已加入 `deploy:hosting` 安全閘與 `dry-run`，可避免只發 Hosting 造成前後端版本錯配；接下來重點是會員中心深化、訂單追蹤 MVP 與 Stripe sandbox 打樣。
+目前生產環境部署穩定，`/visual-intelligence` 與 `/api/look-analysis` 線上 smoke test 維持 `200`。本週已完成 `HANDBOOK/README` 去重、`collection/bespoke` 重複碼清理、`/collection -> /bespoke` 導流收斂，以及 TypeScript 問題清零；接下來重點是 `/bespoke` runtime 資產路徑最終驗證、大型媒體檔案策略與會員中心功能深化。
 
 ---
 
-## ✅ 現時進度總覽（2026-03-02）
+## ✅ 現時進度總覽（2026-03-15）
 
 - ✅ 已完成：Firebase Auth（Google / Email）、登入後 redirect、customer 檔案自動補建
 - ✅ 已完成：購物車 → 登入導流（未登入導向 `/login?redirect=/checkout`）
@@ -24,16 +24,22 @@
 - ✅ 已完成：Production 全量部署與 smoke test（`/visual-intelligence`、`/api/look-analysis` 皆 200）
 - ✅ 已完成：Functions region 清理與對齊（刪除 `asia-east1` 舊版，使用 `us-central1`）
 - ✅ 已完成：README/HANDBOOK 文件整合
+- ✅ 已完成：`collection/bespoke` 重複碼與孤立檔案清理（刪除 `src/app/collection/bespoke/`、`src/app/collection/SuitVisualizer.tsx`）
+- ✅ 已完成：`/collection` 路由收斂（固定導向 `/bespoke`）
+- ✅ 已完成：近期 TS/語法問題修復（含 `product/[id]` JSX token）
+- 🟡 進行中：`/bespoke` 素材路徑穩定化與 runtime 404 風險收斂
 - 🟡 進行中：會員中心（`/profile`）內容深化、訂單追蹤體驗
 - ⚪ 未開始：Stripe 真實金流串接
 
 ---
 
-## 📌 近期狀態備註（2026-03-02）
+## 📌 近期狀態備註（2026-03-15）
 
 - 目前正式可用站點：`https://alexis-bespoke.web.app`
 - 預設站點 `alexis-tailor-system-2025.web.app` 未配置同等 rewrite，子路徑可能出現 404
 - 部署建議固定使用 `npm run deploy:prod`，避免只 deploy hosting 造成前後端版本錯配
+- `/collection` 已改為入口導流，不再維護獨立 visualizer 實作
+- 工作樹存在大型媒體檔（`deploy_final/public/hero.mp4`），合併前需決策是否改走 CDN/物件儲存
 
 ---
 
@@ -42,7 +48,8 @@
 ### ✅ 已可用（核心流程上線）
 
 - `/`（首頁）：品牌入口與主要導覽可用
-- `/collection`：布料列表讀取 `/api/fabrics`，可進一步選品
+- `/collection`：入口導流頁，固定 `redirect('/bespoke')`
+- `/bespoke`：主客製化流程頁（目前唯一維護的視覺化引擎入口）
 - `/design/[fabricId]`：客製配置流程可用（布料/版型參數）
 - `/cart`：購物車讀取與登入導流可用
 - `/checkout`：下單主流程、量身資料回寫、收據 API 呼叫可用
@@ -74,28 +81,27 @@
 
 ## 🚀 下週執行清單（Top 5）
 
-> 目標：把「可下單」升級為「可營運、可追蹤、可收款」的下一個穩定版本。
+> 目標：先收斂近期重構風險，再推進會員體驗與收款能力。
 
-1. **收據系統升級為後端事件觸發（高優先）**
-  - 將 `/api/send-receipt` 改為由 `orders` 新增事件觸發（避免前端漏發）。
-  - 成功條件：即使客戶關閉頁面，仍能寄出收據。
+1. **`/bespoke` runtime 資源驗證（高優先）**
+  - 針對 base/lapel/pocket/fabric 請求做一次完整 network 檢查（含 mobile viewport）。
+  - 成功條件：無關鍵資產 404，頁面首屏可穩定渲染。
 
-2. **`/profile` MVP 上線（會員中心）**
+2. **視覺化素材映射收斂**
+  - 將 `SuitVisualizer` 的素材來源策略定版（避免 png/svg fallback 與路徑混用反覆回退）。
+  - 成功條件：團隊對單一路徑規則達成一致，合併後不再出現回退型錯誤。
+
+3. **大型媒體檔策略決策**
+  - 評估 `deploy_final/public/hero.mp4` 是否改為 CDN/物件儲存供應。
+  - 成功條件：repo 體積可控，部署速度與成本可預期。
+
+4. **`/profile` MVP 上線（會員中心）**
   - 顯示：客戶基本資料 + 最新 measurements。
   - 成功條件：登入後可查看個人資料，不需回到 checkout 才看得到尺寸。
 
-3. **訂單追蹤 MVP（My Wardrobe）**
+5. **訂單追蹤 MVP（My Wardrobe）**
   - 在會員中心列出 `customers/{uid}` 關聯訂單（含 `status`、`orderNumber`、`invoiceNumber`）。
   - 成功條件：客戶可看到至少最近一筆訂單與狀態。
-
-4. **收據 API 防呆與監控補強**
-  - 新增 payload 驗證（缺 `email`/`orderNumber` 直接 400）。
-  - 增加錯誤紀錄欄位或 log tag，便於追查漏寄。
-  - 成功條件：API 錯誤可被快速定位。
-
-5. **Stripe 技術 Spike（先打樣）**
-  - 完成 Stripe key 設定與 `/api/checkout` 最小可行版（先 sandbox）。
-  - 成功條件：可建立一筆測試 Checkout Session 並成功回跳網站。
 
 ---
 
@@ -149,4 +155,4 @@ _拉開與一般競爭對手的技術差距，打造世界級的線上高訂體�
   - [ ] **核心價值**：讓 Alexis Tailor 從香港本地品牌正式邁向國際市場。
 
 ---
-*Last Updated: 2026-03-02*
+*Last Updated: 2026-03-15*

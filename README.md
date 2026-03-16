@@ -2,6 +2,13 @@
 
 Alexis Bespoke 的 Next.js + Firebase 網站專案，涵蓋品牌展示、商品客製、購物結帳、AI 造型分析與後台管理流程。
 
+## 0) 目前狀態（2026-03-15）
+
+- 站點部署穩定，`/visual-intelligence` 與 `/api/look-analysis` smoke test 維持 `200`
+- `collection/bespoke` 重複碼已清理，`/collection` 固定導向 `/bespoke`
+- 近期 TypeScript / JSX 問題已收斂（Problems panel 為 0）
+- 合併前建議：再次驗證 `/bespoke` 的 base/lapel/pocket/fabric 請求無 404
+
 ## 1) 技術堆疊
 
 - Next.js 16 (App Router + Pages API 混合)
@@ -85,11 +92,12 @@ curl -sS -X POST https://alexis-bespoke.web.app/api/look-analysis \
 
 ## 7) 核心業務流程
 
-1. collection 看布料
-2. design/[fabricId] 客製配置
-3. cart 確認項目
-4. checkout 填寫資料並送單
-5. order/[orderNumber] 顯示訂單結果
+1. collection 導向 bespoke
+2. bespoke 主客製流程
+3. design/[fabricId] 客製配置（保留既有流程）
+4. cart 確認項目
+5. checkout 填寫資料並送單
+6. order/[orderNumber] 顯示訂單結果
 
 AI 造型分析路徑：
 
@@ -98,10 +106,15 @@ AI 造型分析路徑：
 
 ## 8) 文件導覽
 
-- 維運手冊（完整版本）：[HANDBOOK.md](HANDBOOK.md)
+- 維運手冊（索引版）：[HANDBOOK.md](HANDBOOK.md)
+- 產品與開發里程碑：[ROADMAP.md](ROADMAP.md)
 - 部署前檢查（完整版）：[docs/cloud-run-predeploy-checklist.md](docs/cloud-run-predeploy-checklist.md)
 - 部署前檢查（1 分鐘版）：[docs/cloud-run-predeploy-checklist-1min.md](docs/cloud-run-predeploy-checklist-1min.md)
 
+
+## 9) 歷史整合片段（僅供參考）
+
+以下內容為早期「下載包整合」示意，不代表目前唯一真實結構；實際維護以本 README 第 2 節專案結構與第 10.1 節路由說明為準。
 
 
 ALEXIS_WEBSITE/
@@ -154,18 +167,18 @@ ALEXIS_WEBSITE/
 ├── ✍️ tailwind.config.ts               <-- [合併] 將下載包的 colors, fontFamily, keyframes 貼入 theme.extend 中
 └── ✍️ package.json                     <-- [合併] 確保安裝了 @radix-ui/react-switch 等依賴
 
-## 9) Alexis Bespoke - 網站系統架構樹
+## 10) Alexis Bespoke - 網站系統架構樹
 
 本文件基於 Next.js App Router 架構，呈現網站的路由結構、頁面組件與後端邏輯的關聯。
 
-### 9.0 工程師快速 TOC
+### 10.0 工程師快速 TOC
 
-- `9.1` 路由與頁面對照
-- `9.2` 元件庫分層（layout / ui / providers）
-- `9.3` 後端與 AI（Server Actions / Genkit Flows / Config）
-- `9.4` Firestore 資料模型
-- `9.5` 專案樹狀圖（快速找檔）
-- `9.6` 設計系統與品牌語言
+- `10.1` 路由與頁面對照
+- `10.2` 元件庫分層（layout / ui / providers）
+- `10.3` 後端與 AI（Server Actions / Genkit Flows / Config）
+- `10.4` Firestore 資料模型
+- `10.5` 專案樹狀圖（快速找檔）
+- `10.6` 設計系統與品牌語言
 
 快速入口（常看路徑）:
 
@@ -176,7 +189,7 @@ ALEXIS_WEBSITE/
 - Firebase 設定: `src/lib/firebase.ts`, `src/lib/firebase-admin.ts`
 - UI 基礎層: `src/components/ui/`
 
-### 9.1 路由與頁面結構 (App Router Structure)
+### 10.1 路由與頁面結構 (App Router Structure)
 
 網站的 URL 路徑與 `src/app` 資料夾結構對應如下。
 
@@ -232,9 +245,14 @@ ALEXIS_WEBSITE/
 #### 系列收藏 `/collection`
 
 - 檔案: `src/app/collection/page.tsx`
-- 功能: 季節性系列展示
+- 功能: 入口導流頁（固定 `redirect('/bespoke')`）
 
-### 9.2 核心組件庫 (Component Library)
+#### 訂製入口 `/bespoke`
+
+- 檔案: `src/app/bespoke/page.tsx`
+- 功能: 主客製化流程與視覺化引擎入口
+
+### 10.2 核心組件庫 (Component Library)
 
 位於 `src/components`，負責 UI 呈現與共用邏輯。
 
@@ -257,7 +275,7 @@ ALEXIS_WEBSITE/
 
 - `auth-provider.tsx`: 封裝 Firebase Auth，提供 User Context
 
-### 9.3 後端邏輯與 AI (Backend & AI)
+### 10.3 後端邏輯與 AI (Backend & AI)
 
 #### 伺服器動作 (Server Actions)
 
@@ -290,7 +308,7 @@ ALEXIS_WEBSITE/
 - `src/lib/firebase.ts`: Firebase Client SDK (Auth, Firestore)
 - `src/lib/firebase-admin.ts`: Firebase Admin SDK (Server-side)
 
-### 9.4 資料庫結構 (Firestore Schema)
+### 10.4 資料庫結構 (Firestore Schema)
 
 目前為 NoSQL，以下為隱含資料模型。
 
@@ -310,7 +328,7 @@ ALEXIS_WEBSITE/
 - `products` (Future)
 - `id`, `fabricName`, `price`, `imageUrl`
 
-### 9.5 專案樹狀圖 (Architecture Tree)
+### 10.5 專案樹狀圖 (Architecture Tree)
 
 ```text
 ALEXIS_WEBSITE
@@ -346,7 +364,7 @@ ALEXIS_WEBSITE
 │   └── lib/                         # 工具函式與 Firebase 設定
 ```
 
-### 9.6 設計風格定位
+### 10.6 設計風格定位
 
 根據目前原始碼與配置，ALEXIS BESPOKE 的設計風格可定位為: `Digital Industrial Noir`。
 
