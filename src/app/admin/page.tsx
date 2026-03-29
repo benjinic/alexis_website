@@ -6,8 +6,7 @@ import { auth, db } from '@/lib/firebase-client';
 import { signInWithEmailAndPassword, signOut, onAuthStateChanged, User } from 'firebase/auth';
 import { doc, getDoc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-// 🔴 注意：這裡我們已經移除了 saveCatalogRecord 的 import！
-import { deleteCatalogItem, updateCatalogOrder, CatalogItem } from '@/app/actions/get-products';
+import { updateCatalogOrder, CatalogItem } from '@/app/actions/get-products';
 
 const AUTHORIZED_EMAILS = ['benjinic@alyceneverland.com'];
 const MAX_UPLOAD_SIZE_MB = 15;
@@ -233,14 +232,26 @@ export default function AdminPage() {
   const handleDelete = async (id: string, src: string) => {
     if (!confirm('CONFIRM_DELETE_IMAGE?')) return;
     try {
-      const path = src.includes('/o/') ? decodeURIComponent(src.split('/o/')[1].split('?')[0]) : decodeURIComponent(new URL(src).pathname.split('/').slice(2).join('/'));
-      const result = await deleteCatalogItem(id, path);
+      let imagePath = '';
+      if (src) {
+        imagePath = src.includes('/o/')
+          ? decodeURIComponent(src.split('/o/')[1].split('?')[0])
+          : decodeURIComponent(new URL(src).pathname.split('/').slice(2).join('/'));
+      }
+      const response = await fetch('/api/admin/catalog', {
+        method: 'DELETE',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id, imagePath }),
+      });
+      const result = await response.json();
       if (result.success) {
         setItems((prev) => prev.filter((item) => item.id !== id));
         alert('DELETED_SUCCESSFULLY');
+      } else {
+        alert(`DELETE_FAILED: ${result.error}`);
       }
-    } catch (err) {
-      alert('FAILED_TO_PARSE_IMAGE_PATH');
+    } catch (err: any) {
+      alert(`DELETE_ERROR: ${err?.message || err}`);
     }
   };
 

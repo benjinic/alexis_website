@@ -55,7 +55,7 @@ export default function CartPage() {
         {cartItems.length === 0 ? (
           <div className="text-center py-32 border border-dashed border-stone-800">
             <p className="font-mono text-[10px] text-stone-500 uppercase tracking-widest mb-6">Your atelier is currently empty.</p>
-            <button onClick={() => router.push('/bespoke')} className="px-8 py-3 bg-white text-black font-bold text-[9px] uppercase tracking-widest hover:bg-stone-300">Return_To_Bespoke</button>
+            <button onClick={() => router.push('/catalog')} className="px-8 py-3 bg-white text-black font-bold text-[9px] uppercase tracking-widest hover:bg-stone-300">Return_To_Catalog</button>
           </div>
         ) : (
           <div className="flex flex-col lg:flex-row gap-12">

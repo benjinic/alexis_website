@@ -10,7 +10,7 @@
 
 ---
 
-## ✅ 現時進度總覽（2026-03-15）
+## ✅ 現時進度總覽（2026-03-30）
 
 - ✅ 已完成：Firebase Auth（Google / Email）、登入後 redirect、customer 檔案自動補建
 - ✅ 已完成：購物車 → 登入導流（未登入導向 `/login?redirect=/checkout`）
@@ -27,19 +27,27 @@
 - ✅ 已完成：`collection/bespoke` 重複碼與孤立檔案清理（刪除 `src/app/collection/bespoke/`、`src/app/collection/SuitVisualizer.tsx`）
 - ✅ 已完成：`/collection` 路由收斂（固定導向 `/bespoke`）
 - ✅ 已完成：近期 TS/語法問題修復（含 `product/[id]` JSX token）
-- 🟡 進行中：`/bespoke` 素材路徑穩定化與 runtime 404 風險收斂
+- ✅ **[NEW] 已完成：Bespoke Constraint 引擎實現（restrict[] / autoChange[] 邏輯）**
+- ✅ **[NEW] 已完成：Firebase 動態庫存整合（Firestore inventory collection）**
+- ✅ **[NEW] 已完成：Canvas 11-層動態渲染 + Protocol Overrides（mannequin 0.5 alpha / shadows multiply）**
+- ✅ **[NEW] 已完成：Terminal Noir 美學設計（glitch CSS + 終端風格 UI）**
+- 🟡 進行中：補完 TERMINAL_DATABASE（jacket_pocket / jacket_buttons / jacket_lining）
+- 🟡 進行中：Firestore 實際連接測試 + 資源檔案驗證 (/images/layers/)
 - 🟡 進行中：會員中心（`/profile`）內容深化、訂單追蹤體驗
 - ⚪ 未開始：Stripe 真實金流串接
 
 ---
 
-## 📌 近期狀態備註（2026-03-15）
+## 📌 近期狀態備註（2026-03-30）
 
 - 目前正式可用站點：`https://alexis-bespoke.web.app`
 - 預設站點 `alexis-tailor-system-2025.web.app` 未配置同等 rewrite，子路徑可能出現 404
 - 部署建議固定使用 `npm run deploy:prod`，避免只 deploy hosting 造成前後端版本錯配
 - `/collection` 已改為入口導流，不再維護獨立 visualizer 實作
+- **[NEW] Bespoke 三步流程核心架構已完成：GARMENT select → FABRIC select (Firestore) → CUSTOMIZE (Canvas + Constraint)**
+- **[NEW] Canvas 管線已驗證：11 圖層排序 + 非同步加載 + Protocol Overrides 應用正常**
 - 工作樹存在大型媒體檔（`deploy_final/public/hero.mp4`），合併前需決策是否改走 CDN/物件儲存
+- 下一步重點：驗證 Firestore 連接 + 補完約束規則資料庫 + 視覺資源路徑確認
 
 ---
 
@@ -49,7 +57,10 @@
 
 - `/`（首頁）：品牌入口與主要導覽可用
 - `/collection`：入口導流頁，固定 `redirect('/bespoke')`
-- `/bespoke`：主客製化流程頁（目前唯一維護的視覺化引擎入口）
+- **`/bespoke`（新升級）**：完整三步客製化流程
+  - **GARMENT 選擇**：5 種服裝類型選項
+  - **FABRIC 選擇**：Firestore 動態庫存 + 三欄布局（分類 | 物品網格 | 規格面板）
+  - **CUSTOMIZE 定製**：Canvas 動態渲染 + Master Protocol Override 手風琴面板（Constraint 控制）
 - `/design/[fabricId]`：客製配置流程可用（布料/版型參數）
 - `/cart`：購物車讀取與登入導流可用
 - `/checkout`：下單主流程、量身資料回寫、收據 API 呼叫可用
@@ -81,15 +92,18 @@
 
 ## 🚀 下週執行清單（Top 5）
 
-> 目標：先收斂近期重構風險，再推進會員體驗與收款能力。
+> 目標：完成 Bespoke 端到端驗證，推進會員體驗與收款能力。
 
-1. **`/bespoke` runtime 資源驗證（高優先）**
-  - 針對 base/lapel/pocket/fabric 請求做一次完整 network 檢查（含 mobile viewport）。
-  - 成功條件：無關鍵資產 404，頁面首屏可穩定渲染。
+1. **Bespoke Firestore + 資源檔案驗證（高優先）**
+  - 驗證 `inventory` 集合連接與 fabricDB 分組正常
+  - 確認 `/images/layers/lapel_*.png`, `/images/layers/pocket_*.png` 等資產存在
+  - 執行完整 GARMENT → FABRIC → CUSTOMIZE 流程，確認 Canvas 無 404 與渲染正常
+  - 成功條件：三步流程端到端可正常運行，Canvas 圖層正確合成。
 
-2. **視覺化素材映射收斂**
-  - 將 `SuitVisualizer` 的素材來源策略定版（避免 png/svg fallback 與路徑混用反覆回退）。
-  - 成功條件：團隊對單一路徑規則達成一致，合併後不再出現回退型錯誤。
+2. **補完 Constraint 資料庫規則**
+  - 在 TERMINAL_DATABASE 中新增：`jacket_pocket`, `jacket_buttons`, `jacket_lining` 分類
+  - 定義各選項的 `price`, `imageUrl`, `restrict[]`, `autoChange[]` 邏輯
+  - 成功條件：Customize 視圖展示所有分類，鎖定/自動變更邏輯正常工作。
 
 3. **大型媒體檔策略決策**
   - 評估 `deploy_final/public/hero.mp4` 是否改為 CDN/物件儲存供應。
@@ -154,5 +168,5 @@ _拉開與一般競爭對手的技術差距，打造世界級的線上高訂體�
   - [ ] 根據客人 IP 自動切換顯示 HKD / USD / TWD。
   - [ ] **核心價值**：讓 Alexis Tailor 從香港本地品牌正式邁向國際市場。
 
----
-*Last Updated: 2026-03-15*
+flow chart
+*Last Updated: 2026-03-30*

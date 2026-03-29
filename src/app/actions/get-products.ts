@@ -112,7 +112,6 @@ export async function saveCatalogRecord(title: string, category: string, imageUr
 
     console.log('🚀 [Server Action] 5. 寫入成功！準備更新快取...');
     revalidatePath('/catalog');
-    revalidatePath('/bespoke');
     revalidatePath('/admin');
 
     console.log('🚀 [Server Action] 6. 全部完成，回傳成功訊號！');
@@ -149,7 +148,6 @@ export async function uploadCatalogImage(formData: FormData) {
     });
 
     revalidatePath('/catalog'); 
-    revalidatePath('/bespoke');
     return { success: true };
   } catch (error) {
     console.error('Upload Error:', error);
@@ -166,7 +164,6 @@ export async function deleteCatalogItem(id: string, imagePath: string) {
     await file.delete();
 
     revalidatePath('/catalog');
-    revalidatePath('/bespoke');
     revalidatePath('/admin');
     return { success: true };
   } catch (error) {

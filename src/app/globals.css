@@ -45,6 +45,7 @@
     --terminal-green: 142 70% 45%;
     --ice: 200 15% 85%;
     --steel: 0 0% 35%;
+    --silver-grey: 0 0% 40%;
 
     /* Gradients */
     --gradient-lava: linear-gradient(135deg, hsl(0 85% 55%), hsl(15 90% 50%));
@@ -169,5 +170,79 @@
 
   .animate-data-stream {
     animation: data-stream 20s linear infinite;
+  }
+
+  /* Glitch Text Effect */
+  .glitch-text {
+    position: relative;
+    display: inline-block;
+    transform: translateZ(0);
+  }
+
+  .glitch-text::before,
+  .glitch-text::after {
+    content: attr(data-text);
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .glitch-text::before {
+    animation: glitch-anim-1 0.3s infinite;
+    color: var(--lava);
+    z-index: -1;
+    text-shadow: -3px 0 var(--lava), -6px 0 var(--lava);
+    clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+  }
+
+  .glitch-text::after {
+    animation: glitch-anim-2 0.3s infinite;
+    color: var(--silver-grey);
+    z-index: -2;
+    text-shadow: 3px 0 var(--silver-grey), 6px 0 var(--silver-grey);
+    clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+  }
+
+  .group:hover .glitch-text::before,
+  .group:hover .glitch-text::after {
+    animation-play-state: running;
+  }
+
+  @keyframes glitch-anim-1 {
+    0%, 100% {
+      clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+    }
+    20% {
+      clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+    }
+    40% {
+      clip-path: polygon(0 0, 100% 0, 100% 50%, 0 50%);
+    }
+    60% {
+      clip-path: polygon(0 0, 100% 0, 100% 30%, 0 30%);
+    }
+    80% {
+      clip-path: polygon(0 0, 100% 0, 100% 48%, 0 48%);
+    }
+  }
+
+  @keyframes glitch-anim-2 {
+    0%, 100% {
+      clip-path: polygon(0 60%, 100% 60%, 100% 100%, 0 100%);
+    }
+    20% {
+      clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+    }
+    40% {
+      clip-path: polygon(0 70%, 100% 70%, 100% 100%, 0 100%);
+    }
+    60% {
+      clip-path: polygon(0 50%, 100% 50%, 100% 100%, 0 100%);
+    }
+    80% {
+      clip-path: polygon(0 65%, 100% 65%, 100% 100%, 0 100%);
+    }
   }
 }

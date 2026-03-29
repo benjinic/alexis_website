@@ -2,12 +2,14 @@
 
 Alexis Bespoke 的 Next.js + Firebase 網站專案，涵蓋品牌展示、商品客製、購物結帳、AI 造型分析與後台管理流程。
 
-## 0) 目前狀態（2026-03-15）
+## 0) 目前狀態（2026-03-30）
 
 - 站點部署穩定，`/visual-intelligence` 與 `/api/look-analysis` smoke test 維持 `200`
+- **[NEW] Bespoke 客製化流程完整實裝：Firebase 庫存整合 + Constraint 引擎 + Canvas 11層動態渲染**
+- **[NEW] 完成 Terminal Noir 終端美學實現：glitch 動畫 + Protocol Override UI + 制約視覺反饋**
 - `collection/bespoke` 重複碼已清理，`/collection` 固定導向 `/bespoke`
-- 近期 TypeScript / JSX 問題已收斂（Problems panel 為 0）
-- 合併前建議：再次驗證 `/bespoke` 的 base/lapel/pocket/fabric 請求無 404
+- TypeScript 類型系統完全通過驗證（strict mode，無報錯）
+- 下一步重點：驗證 Firestore 連接 + 補完約束規則資料庫 + 資源檔案路徑確認
 
 ## 1) 技術堆疊
 
@@ -92,14 +94,25 @@ curl -sS -X POST https://alexis-bespoke.web.app/api/look-analysis \
 
 ## 7) 核心業務流程
 
-1. collection 導向 bespoke
-2. bespoke 主客製流程
-3. design/[fabricId] 客製配置（保留既有流程）
-4. cart 確認項目
-5. checkout 填寫資料並送單
-6. order/[orderNumber] 顯示訂單結果
+### 用户客製化流程（Bespoke）
 
-AI 造型分析路徑：
+1. **GARMENT 選擇**：選擇服裝類型（5 種選項）
+2. **FABRIC 選擇**：瀏覽 Firestore 動態庫存、按分類篩選、查看規格
+3. **CUSTOMIZE 定製**：
+   - 左側 Canvas 動態渲染（11 層圖層聚合、Protocol Overrides）
+   - 右側 Master Protocol Override 手風琴：選擇版型、領口、口袋、鈕扣、襯裡等
+   - Constraint 引擎：自動禁用不相容選項、連鎖更新相關選項
+   - 即時視覺反饋：灰顯 lockedOptions、顯示價格增減
+
+### 購物投片流程
+
+1. collection 導向 bespoke
+2. design/[fabricId] 客製配置（保留既有流程）
+3. cart 確認項目
+4. checkout 填寫資料並送單
+5. order/[orderNumber] 顯示訂單結果
+
+### AI 造型分析路徑
 
 - 前端頁面：/visual-intelligence
 - API 端點：/api/look-analysis

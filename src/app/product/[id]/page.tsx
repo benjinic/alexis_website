@@ -25,7 +25,7 @@ const MOCK_PRODUCT = {
   }
 };
 
-export default function ProductDetailPage({ params }: { params: { id: string } }) {
+export default function ProductDetailPage({ params: _params }: { params: Promise<{ id: string }> }) {
   const router = useRouter();
   const [isInitializing, setIsInitializing] = useState(false);
   const [activeImage, setActiveImage] = useState(0);
