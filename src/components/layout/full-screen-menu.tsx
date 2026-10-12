@@ -18,6 +18,7 @@ export function FullScreenMenu() {
     { label: 'CATALOG', href: '/catalog' },
     { label: 'PROCESS', href: '/process' },
     { label: 'BESPOKE', href: '/bespoke' },
+    { label: 'FABRIC LAB', href: '/fabric-lab' },
     { label: 'AI ADVISOR', href: '/visual-intelligence' },
     { label: 'BOOK NOW', href: '/booking' },
   ];

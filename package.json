@@ -15,6 +15,7 @@
     "start": "next start",
     "lint": "next lint",
     "test:e2e": "playwright test",
+    "test:e2e:bespoke": "playwright test tests/e2e/bespoke-customize.spec.ts tests/e2e/bespoke-sidebar-summary.spec.ts",
     "test:e2e:headed": "playwright test --headed",
     "test:e2e:install": "playwright install chromium"
   },
@@ -27,7 +28,6 @@
     "@genkit-ai/ai": "^1.16.1",
     "@genkit-ai/flow": "^0.5.17",
     "@genkit-ai/google-genai": "^1.16.1",
-    "@genkit-ai/next": "^1.16.1",
     "@genkit-ai/vertexai": "^1.16.1",
     "@google-cloud/modelarmor": "^0.1.0",
     "@hookform/resolvers": "^4.1.3",

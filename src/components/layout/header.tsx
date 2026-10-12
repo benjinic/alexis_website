@@ -32,8 +32,6 @@ export default function Header() {
     }
   };
 
-  if (pathname === '/') return null;
-
   const displayName = authUser?.displayName?.split(' ')[0] || authUser?.email?.split('@')[0] || 'VIP';
 
   return (

@@ -7,7 +7,8 @@ import {
   Roboto_Mono,
 } from 'next/font/google';
 import './globals.css';
-import Header from '@/components/layout/header';
+import GlobalNavbar from '@/components/GlobalNavbar';
+import GlobalFooter from '@/components/GlobalFooter';
 import { CartProvider } from '@/app/context/CartContext';
 
 // Roboto Regular 400 — 選單與內文
@@ -53,13 +54,14 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html
-      lang="en"
+      lang="zh-TW"
       className={`${roboto.variable} ${robotoCondensed.variable} ${spaceMono.variable} ${jetbrainsMono.variable} ${robotoMono.variable}`}
     >
       <body className="bg-carbon-black text-carbon-black font-sans antialiased">
         <CartProvider>
-          <Header />
-          {children}
+          <GlobalNavbar />
+          <main>{children}</main>
+          <GlobalFooter />
         </CartProvider>
       </body>
     </html>

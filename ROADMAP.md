@@ -6,7 +6,7 @@
 
 ## 🔎 Current Status
 
-目前生產環境部署穩定，`/visual-intelligence` 與 `/api/look-analysis` 線上 smoke test 維持 `200`。本週已完成 `HANDBOOK/README` 去重、`collection/bespoke` 重複碼清理、`/collection -> /bespoke` 導流收斂，以及 TypeScript 問題清零；接下來重點是 `/bespoke` runtime 資產路徑最終驗證、大型媒體檔案策略與會員中心功能深化。
+目前生產環境部署穩定，`/visual-intelligence` 與 `/api/look-analysis` 線上 smoke test 維持 `200`。本週已完成 `HANDBOOK/README` 去重、`collection/bespoke` 重複碼清理、`/collection -> /bespoke` 導流收斂、Bespoke 模組化重構（配置抽離 + 三組件拆分）、FABRIC 視窗滾動修正，以及正式 deploy；接下來重點是 `/bespoke` runtime 資產路徑最終驗證、大型媒體檔案策略與會員中心功能深化。
 
 ---
 
@@ -31,6 +31,9 @@
 - ✅ **[NEW] 已完成：Firebase 動態庫存整合（Firestore inventory collection）**
 - ✅ **[NEW] 已完成：Canvas 11-層動態渲染 + Protocol Overrides（mannequin 0.5 alpha / shadows multiply）**
 - ✅ **[NEW] 已完成：Terminal Noir 美學設計（glitch CSS + 終端風格 UI）**
+- ✅ **[NEW] 已完成：Bespoke 模組化拆分（StepNavigator / VisualEngine / ConfigSidebar + bespoke-config）**
+- ✅ **[NEW] 已完成：FABRIC 頁面固定視窗與單一滾動區修正（h-screen + overflow-hidden + shrink-0）**
+- ✅ **[NEW] 已完成：Production deploy 成功（functions + hosting）**
 - 🟡 進行中：補完 TERMINAL_DATABASE（jacket_pocket / jacket_buttons / jacket_lining）
 - 🟡 進行中：Firestore 實際連接測試 + 資源檔案驗證 (/images/layers/)
 - 🟡 進行中：會員中心（`/profile`）內容深化、訂單追蹤體驗
@@ -46,6 +49,8 @@
 - `/collection` 已改為入口導流，不再維護獨立 visualizer 實作
 - **[NEW] Bespoke 三步流程核心架構已完成：GARMENT select → FABRIC select (Firestore) → CUSTOMIZE (Canvas + Constraint)**
 - **[NEW] Canvas 管線已驗證：11 圖層排序 + 非同步加載 + Protocol Overrides 應用正常**
+- **[NEW] FABRIC 視圖已修正為「只有中間布料網格滾動」，左右側欄固定不壓縮**
+- **[NEW] 最新正式部署成功：`https://alexis-bespoke.web.app`**
 - 工作樹存在大型媒體檔（`deploy_final/public/hero.mp4`），合併前需決策是否改走 CDN/物件儲存
 - 下一步重點：驗證 Firestore 連接 + 補完約束規則資料庫 + 視覺資源路徑確認
 
@@ -169,4 +174,4 @@ _拉開與一般競爭對手的技術差距，打造世界級的線上高訂體�
   - [ ] **核心價值**：讓 Alexis Tailor 從香港本地品牌正式邁向國際市場。
 
 flow chart
-*Last Updated: 2026-03-30*
+*Last Updated: 2026-04-01*

@@ -2,14 +2,24 @@
 
 Alexis Bespoke 的 Next.js + Firebase 網站專案，涵蓋品牌展示、商品客製、購物結帳、AI 造型分析與後台管理流程。
 
-## 0) 目前狀態（2026-03-30）
+## 0) 目前狀態（2026-04-01）
 
 - 站點部署穩定，`/visual-intelligence` 與 `/api/look-analysis` smoke test 維持 `200`
 - **[NEW] Bespoke 客製化流程完整實裝：Firebase 庫存整合 + Constraint 引擎 + Canvas 11層動態渲染**
 - **[NEW] 完成 Terminal Noir 終端美學實現：glitch 動畫 + Protocol Override UI + 制約視覺反饋**
+- **[NEW] Bespoke 已模組化：`page.tsx` 流程容器 + `bespoke-config.ts` + `StepNavigator/VisualEngine/ConfigSidebar`**
+- **[NEW] FABRIC 頁面完成固定視窗與滾動治理：僅中間布料網格滾動，左右欄固定**
+- **[NEW] Production deploy 成功（functions + hosting）**
 - `collection/bespoke` 重複碼已清理，`/collection` 固定導向 `/bespoke`
 - TypeScript 類型系統完全通過驗證（strict mode，無報錯）
 - 下一步重點：驗證 Firestore 連接 + 補完約束規則資料庫 + 資源檔案路徑確認
+
+### 最新部署結果（2026-04-01）
+
+- 部署指令：`npm run deploy:prod`
+- 狀態：成功
+- Hosting URL：`https://alexis-bespoke.web.app`
+- Function URL：`https://nextserver-iv4r7rb3ja-uc.a.run.app`
 
 ## 1) 技術堆疊
 
