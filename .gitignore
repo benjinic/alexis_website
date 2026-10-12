@@ -36,3 +36,8 @@ service-account.json
 # Playwright
 playwright-report/
 deploy_final/public/hero.mp4
+
+# Secrets — never commit
+.env
+.env.*
+!.env.example
