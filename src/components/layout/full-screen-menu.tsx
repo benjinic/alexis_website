@@ -17,7 +17,8 @@ export function FullScreenMenu() {
   const menuItems = [
     { label: 'CATALOG', href: '/catalog' },
     { label: 'PROCESS', href: '/process' },
-    { label: 'COLLECTION', href: '/collection' },
+    { label: 'BESPOKE', href: '/bespoke' },
+    { label: 'FABRIC LAB', href: '/fabric-lab' },
     { label: 'AI ADVISOR', href: '/visual-intelligence' },
     { label: 'BOOK NOW', href: '/booking' },
   ];

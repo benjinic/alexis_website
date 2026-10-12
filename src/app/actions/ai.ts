@@ -8,9 +8,15 @@ export async function getStyleAdvice(occasionOrMood: string) {
   try {
     const result = await aiStyleAdvisorFlow({ occasionOrMood });
     return result; 
-  } catch (error) {
-    console.error('Error getting style advice:', error);
-    throw new Error('Failed to get style advice from AI.');
+  } catch (error: any) {
+    // 🔴 關鍵升級：把錯誤完整印在伺服器上，這樣 GCP Logs 才會抓到真正的死因！
+    console.error('🔥 [CRITICAL] Vertex AI 連線崩潰，詳細報告:', JSON.stringify({
+      message: error.message,
+      stack: error.stack,
+      cause: error.cause
+    }, null, 2));
+    
+    throw new Error('Failed to get style advice from AI. Please check server logs.');
   }
 }
 

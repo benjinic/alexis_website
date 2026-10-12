@@ -1,48 +1,68 @@
-import type { Metadata } from "next";
-import { Inter, Roboto_Condensed, Space_Mono } from "next/font/google";
-import "./globals.css";
-// // 引入統一後的 Header 組件 // //
-import Header from "@/components/layout/header";
+import type { Metadata } from 'next';
+import {
+  Roboto,
+  Roboto_Condensed,
+  Space_Mono,
+  JetBrains_Mono,
+  Roboto_Mono,
+} from 'next/font/google';
+import './globals.css';
+import GlobalNavbar from '@/components/GlobalNavbar';
+import GlobalFooter from '@/components/GlobalFooter';
+import { CartProvider } from '@/app/context/CartContext';
 
-// // 設定品牌專用的字體 // //
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
-const robotoCondensed = Roboto_Condensed({ 
-  subsets: ["latin"], 
-  weight: ['400', '700'],
-  variable: "--font-roboto-condensed" 
+// Roboto Regular 400 — 選單與內文
+const roboto = Roboto({
+  subsets: ['latin'],
+  weight: ['400'],
+  variable: '--font-roboto',
+  display: 'swap',
 });
-const spaceMono = Space_Mono({ 
-  subsets: ["latin"], 
+
+// 1. 品牌大標題字體
+const robotoCondensed = Roboto_Condensed({
+  subsets: ['latin'],
+  variable: '--font-roboto-condensed',
+  display: 'swap',
+});
+
+// 2. 測量與數據專用字體
+const spaceMono = Space_Mono({
+  subsets: ['latin'],
   weight: ['400', '700'],
-  variable: "--font-space-mono" 
+  variable: '--font-space-mono',
+  display: 'swap',
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ['latin'],
+  variable: '--font-jetbrains-mono',
+  display: 'swap',
+});
+
+const robotoMono = Roboto_Mono({
+  subsets: ['latin'],
+  variable: '--font-roboto-mono',
+  display: 'swap',
 });
 
 export const metadata: Metadata = {
-  title: "ALEXIS BESPOKE | Visual Archive",
-  description: "Digital Protocol for Modern Bespoke Tailoring",
+  title: 'ALEXIS BESPOKE | Visual Archive',
+  description: 'Digital Protocol for Modern Bespoke Tailoring',
 };
 
-export default function RootLayout({
-  children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className="dark">
-      <body
-        className={`${inter.variable} ${robotoCondensed.variable} ${spaceMono.variable} antialiased bg-stone-950 text-stone-50`}
-      >
-        {/* // --- 全站統一 Header --- // */}
-        {/* // 此組件已包含滾動變色邏輯與置中 Logo // */}
-        <Header />
-
-        {/* // --- 主要內容區塊 --- // */}
-        {/* // 使用 min-h-screen 確保背景顏色填滿整個螢幕 // */}
-        <main className="min-h-screen">
-          {children}
-        </main>
-
-        {/* // 這裡可以放置全站統一的 Toaster 或 Footer (選配) // */}
+    <html
+      lang="zh-TW"
+      className={`${roboto.variable} ${robotoCondensed.variable} ${spaceMono.variable} ${jetbrainsMono.variable} ${robotoMono.variable}`}
+    >
+      <body className="bg-carbon-black text-carbon-black font-sans antialiased">
+        <CartProvider>
+          <GlobalNavbar />
+          <main>{children}</main>
+          <GlobalFooter />
+        </CartProvider>
       </body>
     </html>
   );

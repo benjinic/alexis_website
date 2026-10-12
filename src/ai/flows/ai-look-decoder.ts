@@ -1,6 +1,8 @@
 import { z } from 'zod';
 import { ai } from '../genkit'; 
 
+const LOOK_DECODER_MODEL = process.env.VERTEX_LOOK_DECODER_MODEL ?? 'vertexai/gemini-2.0-flash-001';
+
 // 定義輸入：接收 Base64 圖片字串
 export const LookDecoderInputSchema = z.object({
   imageDataUri: z.string().describe('The base64 encoded image data URI of the user\'s outfit.'),
@@ -37,9 +39,7 @@ export const aiLookDecoderFlow = ai.defineFlow(
     `;
 
     const llmResponse = await ai.generate({
-      // 🔴 關鍵修改：使用明確的版本號 'vertexai/gemini-1.5-flash-001'
-      // 這比 'gemini-1.5-pro' 或 'gemini-1.5-flash' 別名更穩定，不容易 404
-      model: 'vertexai/gemini-2.0-flash-001', 
+      model: LOOK_DECODER_MODEL,
       prompt: [
         { text: prompt },
         { media: { url: input.imageDataUri } } 

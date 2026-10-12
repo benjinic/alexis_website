@@ -1,6 +1,6 @@
 'use server';
 
-import { getFirebaseDB } from '@/lib/firebase-admin';
+import { db } from '@/lib/firebase-admin';
 import nodemailer from 'nodemailer';
 
 // 您的 WhatsApp 連結
@@ -31,7 +31,6 @@ export async function createBooking(prevState: any, formData: FormData) {
 
   try {
     // 3. 寫入 Firebase 資料庫
-    const db = getFirebaseDB();
     console.log('📝 寫入預約資料...');
     await db.collection('appointments').add({
       name,

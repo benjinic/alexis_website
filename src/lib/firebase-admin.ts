@@ -1,49 +1,47 @@
-import admin from 'firebase-admin';
+import * as admin from 'firebase-admin';
 
-// 定義專屬 App 名稱，避免熱重載錯誤
-const APP_NAME = 'ALEXIS_WORKER';
+const projectId = process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID || 'alexis-tailor-system-2025';
+const storageBucketName = (
+  process.env.FIREBASE_STORAGE_BUCKET ||
+  process.env.NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET ||
+  `${projectId}.appspot.com`
+)
+  .replace(/^gs:\/\//, '')
+  .replace(/\/$/, '');
 
-export function getFirebaseDB() {
-  // 1. 檢查是否已初始化
-  const existingApp = admin.apps.find(app => app?.name === APP_NAME);
-  if (existingApp) {
-    return existingApp.firestore();
+if (!admin.apps.length) {
+  try {
+    console.log("🔥 [系統啟動] 準備初始化 Firebase Admin...");
+
+    // 🔴 嚴格檢查：必須「信箱」跟「密碼」同時存在，才啟用本地密碼模式
+    const hasLocalKeys = process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL;
+
+    if (hasLocalKeys) {
+      console.log("💻 [登入模式] 偵測到完整密碼，使用本地金鑰登入...");
+      const formattedKey = process.env.FIREBASE_PRIVATE_KEY!.replace(/"/g, '').replace(/\\n/g, '\n');
+      
+      admin.initializeApp({
+        credential: admin.credential.cert({
+          projectId,
+          clientEmail: process.env.FIREBASE_CLIENT_EMAIL,
+          privateKey: formattedKey,
+        }),
+        storageBucket: storageBucketName,
+      });
+    } else {
+      console.log("☁️ [登入模式] 無密碼或密碼不完整，啟動 Google 雲端自動刷臉 (ADC) 模式...");
+      // 雲端環境直接呼叫 initializeApp()，它會自動抓取最高權限！
+      admin.initializeApp({
+        projectId,
+        storageBucket: storageBucketName,
+      });
+    }
+    
+    console.log("✅ [系統啟動] Firebase Admin 初始化成功！");
+  } catch (error: any) {
+    console.error("❌ [致命錯誤] Firebase Admin 初始化失敗，死因：", error.message);
   }
-
-  // 2. 讀取環境變數
-  const projectId = process.env.ALEXIS_PROJECT_ID;
-  const clientEmail = process.env.ALEXIS_CLIENT_EMAIL;
-  const privateKeyRaw = process.env.ALEXIS_PRIVATE_KEY;
-
-  if (!projectId || !clientEmail || !privateKeyRaw) {
-    console.error('❌ Admin Init Error: 環境變數缺失，請檢查 .env');
-    // 回傳預設實例以防止崩潰
-    return admin.firestore();
-  }
-
-  // 3. 處理私鑰格式
-  const cleanKey = privateKeyRaw.replace(/^["']|["']$/g, '').trim();
-  const finalKey = cleanKey.replace(/\\n/g, '\n');
-
-  if (!finalKey.startsWith('-----BEGIN PRIVATE KEY-----')) {
-     console.error('❌ Admin Init Error: 私鑰格式錯誤');
-     return admin.firestore();
-  }
-
-  console.log(`🔄 初始化專屬 App: ${APP_NAME}...`);
-
-  // 4. 初始化
-  const app = admin.initializeApp({
-    credential: admin.credential.cert({
-      projectId,
-      clientEmail,
-      privateKey: finalKey,
-    }),
-  }, APP_NAME);
-
-  return app.firestore();
 }
 
-export const db = {
-  collection: (name: string) => getFirebaseDB().collection(name)
-} as any;
+const db = admin.firestore();
+export { admin, db, storageBucketName };

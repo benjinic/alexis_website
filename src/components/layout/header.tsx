@@ -2,61 +2,86 @@
 
 import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { FullScreenMenu } from './full-screen-menu';
-import { ShoppingBag } from 'lucide-react';
+import { ShoppingBag, User as UserIcon, LogOut } from 'lucide-react'; 
+
+import { auth } from '@/lib/firebase-client';
+import { onAuthStateChanged, signOut, User as FirebaseUser } from 'firebase/auth'; 
 
 export default function Header() {
   const pathname = usePathname();
-  const [isScrolled, setIsScrolled] = useState(false);
+  const router = useRouter();
 
-  // // 監聽捲動：控制 Header 背景與高度的過渡效果 // //
+  const [authUser, setAuthUser] = useState<FirebaseUser | null>(null);
+
   useEffect(() => {
-    const handleScroll = () => {
-      // 當向下捲動超過 50 像素時觸發狀態切換
-      setIsScrolled(window.scrollY > 50);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setAuthUser(currentUser);
+    });
+    return () => unsubscribe();
   }, []);
 
-  // // 邏輯判斷：首頁通常有獨自的沈浸式設計，此處設定首頁不顯示此標準 Header // //
-  if (pathname === '/') return null;
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      router.push('/');
+    } catch (error) {
+      console.error("登出失敗:", error);
+    }
+  };
+
+  const displayName = authUser?.displayName?.split(' ')[0] || authUser?.email?.split('@')[0] || 'VIP';
 
   return (
-    <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-in-out border-b ${
-        isScrolled
-          ? 'bg-stone-950/90 backdrop-blur-md border-stone-800 py-3' 
-          : 'bg-transparent border-transparent py-6'
-      }`} // 透過 isScrolled 動態切換背景與邊框顏色
-    >
-      <div className="container mx-auto px-4 md:px-8 flex items-center justify-between relative">
+    <header className="fixed top-0 left-0 w-full flex items-center justify-between px-6 py-4 z-[var(--z-header)] bg-stone-950/70 backdrop-blur-md border-b border-white/10 text-white">
+      <div className="w-full max-w-7xl mx-auto flex items-center justify-between relative">
         
-        {/* // 左側區域：漢堡選單 (FullScreenMenu) // */}
         <div className="flex-1 flex justify-start">
           <FullScreenMenu />
         </div>
 
-        {/* // 中間區域：絕對定位的 Logo，確保在任何寬度下皆完美居中 // */}
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2">
           <Link href="/" className="group flex items-center gap-2">
             <span className="font-space_mono font-bold text-xl md:text-2xl tracking-tighter text-white">
               ALEXIS
             </span>
-            {/* // 🔴 關鍵修改：將原本紫色文字統一改為白色以符合 Noir 風格 // */}
             <span className="text-[10px] md:text-xs font-mono font-normal tracking-[0.3em] text-white mt-1 transition-colors">
               BESPOKE
             </span>
           </Link>
         </div>
 
-        {/* // 右側區域：功能按鈕 (預約與購物車) // */}
-        <div className="flex-1 flex items-center justify-end gap-4">
+        <div className="flex-1 flex items-center justify-end gap-4 md:gap-5">
+          
+          {authUser ? (
+            <div className="flex items-center gap-3 border-r border-white/20 pr-4 md:pr-5">
+              <span className="hidden md:block font-mono text-[10px] text-stone-400 tracking-widest uppercase truncate max-w-[80px]">
+                {displayName}
+              </span>
+              <button 
+                onClick={handleLogout} 
+                className="text-white hover:text-stone-400 transition-colors flex items-center"
+                title="Logout"
+              >
+                <LogOut className="w-[18px] h-[18px]" />
+              </button>
+            </div>
+          ) : (
+            <Link 
+              href="/login" 
+              className="text-white hover:text-stone-400 transition-colors border-r border-white/20 pr-4 md:pr-5 flex items-center"
+              title="Client Portal"
+            >
+              <UserIcon className="w-5 h-5" />
+            </Link>
+          )}
+
           <Link href="/cart" className="text-white hover:text-stone-400 transition-colors">
             <ShoppingBag className="w-5 h-5" />
           </Link>
+
           <Link href="/booking" className="hidden sm:block">
             <Button 
               variant="outline" 
@@ -65,6 +90,7 @@ export default function Header() {
               BOOK NOW
             </Button>
           </Link>
+          
         </div>
       </div>
     </header>

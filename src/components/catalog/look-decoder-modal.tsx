@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { getLookAnalysis } from '@/app/actions/ai';
 import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Card, CardContent } from '@/components/ui/card';
@@ -46,8 +45,20 @@ export default function LookDecoderModal() {
     setIsAnalyzing(true);
 
     try {
-      const analysis = await getLookAnalysis(imagePreview);
-      setResult(analysis as unknown as AnalysisResult);
+      const response = await fetch('/api/look-analysis', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ imageDataUri: imagePreview }),
+      });
+
+      const payload = await response.json().catch(() => null);
+      const resultPayload = payload?.data ?? payload;
+
+      if (!response.ok || !resultPayload) {
+        throw new Error(payload?.message || 'Failed to analyze look.');
+      }
+
+      setResult(resultPayload as AnalysisResult);
     } catch (error) {
       console.error(error);
       toast({ title: "Analysis Failed", description: "Visual sensors overloaded. Try a clearer photo.", variant: "destructive" });

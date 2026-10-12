@@ -23,7 +23,7 @@ function BookingForm() {
   // // 2. 監聽網址參數變動 // //
   useEffect(() => {
     // 從 URL 中抓取 'fabric' 參數 (由 Collection 頁面傳來)
-    const fabricFromUrl = searchParams.get('fabric');
+    const fabricFromUrl = searchParams?.get('fabric');
     
     if (fabricFromUrl) {
       setFormData(prev => ({
