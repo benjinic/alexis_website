@@ -47,8 +47,8 @@ export default function Header() {
             <span className="font-space_mono font-bold text-xl md:text-2xl tracking-tighter text-white">
               ALEXIS
             </span>
-            <span className="text-[10px] md:text-xs font-mono font-normal tracking-[0.3em] text-white mt-1 transition-colors">
-              BESPOKE
+            <span className="text-[10px] md:text-xs font-zh-serif font-normal tracking-[0.3em] text-white mt-1 transition-colors">
+              雅思洋服
             </span>
           </Link>
         </div>

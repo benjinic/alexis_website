@@ -71,6 +71,7 @@ const config: Config = {
         roboto: ['var(--font-roboto-mono)', 'monospace'],
         condensed: ['var(--font-roboto-condensed)', 'sans-serif'],
         space: ['var(--font-space-mono)', 'monospace'],
+        'zh-serif': ['"Noto Serif TC"', '"Songti TC"', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
