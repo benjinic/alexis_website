@@ -51,16 +51,16 @@ export default function NoirSections() {
   const pair = PAIRS[active];
 
   return (
-    <div className="bg-[#0a0a0a] text-white">
+    <div className="bg-brand-cream text-brand-ink">
       {/* 01 THE RULES */}
       <section id="rules" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 max-w-6xl mx-auto">
         <Kicker n="01" label="THE RULES" />
         <h2 className="font-condensed font-black text-4xl md:text-6xl tracking-tight leading-[1.05]">
           THE SUIT IS NOT THE RULE.
-          <span className="block text-stone-400">IT&rsquo;S THE BEGINNING.</span>
+          <span className="block text-stone-600">IT&rsquo;S THE BEGINNING.</span>
         </h2>
-        <p className="font-zh-serif text-xl md:text-2xl text-stone-200 mt-6">西裝不是規矩，是起點。</p>
-        <p className="font-zh-serif text-stone-400 mt-6 max-w-2xl leading-relaxed">
+        <p className="font-zh-serif text-xl md:text-2xl text-stone-800 mt-6">西裝不是規矩，是起點。</p>
+        <p className="font-zh-serif text-stone-600 mt-6 max-w-2xl leading-relaxed">
           八分紀律，兩分破格。每一次破規矩，都建立在正確的規矩之上：合身的肩線、準確的褲長、乾淨的褲頭。之後，只破一條。
         </p>
 
@@ -74,7 +74,7 @@ export default function NoirSections() {
                 aria-selected={i === active}
                 onClick={() => setActive(i)}
                 className={`font-condensed text-sm tracking-[0.25em] px-4 py-2 border transition-colors ${
-                  i === active ? 'bg-white text-black border-white' : 'border-white/20 text-stone-400 hover:text-white'
+                  i === active ? 'bg-brand-ink text-brand-cream border-brand-ink' : 'border-black/20 text-stone-600 hover:text-brand-ink'
                 }`}
               >
                 {p.name}
@@ -84,8 +84,8 @@ export default function NoirSections() {
 
           <div className="grid grid-cols-2 gap-3 md:gap-6 max-w-4xl">
             {[
-              { img: pair.rule, label: 'RULE', cls: 'text-stone-400', alt: '守規矩版' },
-              { img: pair.brk, label: 'BREAK ONE', cls: 'text-lava-red', alt: '破一條規矩' },
+              { img: pair.rule, label: 'RULE', cls: 'text-stone-600', alt: '守規矩版' },
+              { img: pair.brk, label: 'BREAK ONE', cls: 'text-brand-accent', alt: '破一條規矩' },
             ].map((v) => (
               <figure key={v.label}>
                 <img
@@ -98,7 +98,7 @@ export default function NoirSections() {
                 />
                 <figcaption className="pt-3 flex flex-col gap-1">
                   <span className={`font-condensed font-bold text-sm tracking-[0.3em] ${v.cls}`}>{v.label}</span>
-                  <span className="font-zh-serif text-sm md:text-base text-stone-300">{v.img.text}</span>
+                  <span className="font-zh-serif text-sm md:text-base text-stone-700">{v.img.text}</span>
                 </figcaption>
               </figure>
             ))}
@@ -107,13 +107,13 @@ export default function NoirSections() {
       </section>
 
       {/* 02 LOOKBOOK */}
-      <section id="lookbook" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 border-t border-white/10">
+      <section id="lookbook" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 bg-brand-sand">
         <div className="max-w-6xl mx-auto">
           <Kicker n="02" label="LOOKBOOK" />
           <h2 className="font-condensed font-black text-4xl md:text-6xl tracking-tight leading-[1.05]">
             SEVEN WAYS TO WEAR IT.
           </h2>
-          <p className="font-zh-serif text-xl md:text-2xl text-stone-200 mt-6">同一套西裝，不止一種男人。</p>
+          <p className="font-zh-serif text-xl md:text-2xl text-stone-800 mt-6">同一套西裝，不止一種男人。</p>
 
           <ul className="mt-14 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
             {CAST.map((p) => (
@@ -121,7 +121,7 @@ export default function NoirSections() {
                 <img src={p.src} alt={`${p.name}：${p.line}`} width={864} height={1080} loading="lazy" className="w-full h-auto block" />
                 <div className="pt-3 flex flex-col gap-1">
                   <span className="font-condensed font-bold text-sm tracking-[0.3em]">{p.name}</span>
-                  <span className="font-zh-serif text-sm text-stone-300">{p.line}</span>
+                  <span className="font-zh-serif text-sm text-stone-700">{p.line}</span>
                   <span className="font-jetbrains text-[11px] tracking-wider text-stone-500">BREAK / {p.brk}</span>
                 </div>
               </li>
@@ -131,7 +131,7 @@ export default function NoirSections() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-lava-red text-white hover:opacity-90 transition-opacity"
+                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-brand-accent text-brand-cream hover:opacity-90 transition-opacity"
               >
                 <span className="font-jetbrains text-[11px] tracking-[0.3em]">NO. 8</span>
                 <span className="font-zh-serif text-xl md:text-2xl leading-snug">
@@ -139,7 +139,7 @@ export default function NoirSections() {
                   <br />
                   由你決定。
                 </span>
-                <span className="font-condensed font-bold text-sm tracking-[0.3em] border-t border-white/50 pt-3">BOOK NOW →</span>
+                <span className="font-condensed font-bold text-sm tracking-[0.3em] border-t border-brand-cream/50 pt-3">BOOK NOW →</span>
               </a>
             </li>
           </ul>
@@ -148,18 +148,18 @@ export default function NoirSections() {
       </section>
 
       {/* 03 VISIT */}
-      <section id="visit" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-28 border-t border-white/10">
+      <section id="visit" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-28 border-t border-black/10">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <Kicker n="03" label="VISIT" />
             <h2 className="font-condensed font-black text-4xl md:text-5xl tracking-tight">MADE TO MEASURE.</h2>
-            <p className="font-zh-serif text-stone-300 mt-6">量身，三步：預約、量身・選布、試身・取衣。</p>
-            <p className="font-condensed italic text-stone-400 mt-6 tracking-wide">
+            <p className="font-zh-serif text-stone-700 mt-6">量身，三步：預約、量身・選布、試身・取衣。</p>
+            <p className="font-condensed italic text-stone-600 mt-6 tracking-wide">
               Visiting Hong Kong? Book a fitting before you arrive.
             </p>
           </div>
           <div className="font-zh-serif">
-            <dl className="divide-y divide-white/10 border-y border-white/10">
+            <dl className="divide-y divide-black/10 border-y border-black/10">
               <div className="grid grid-cols-[96px_1fr] gap-4 py-4">
                 <dt className="font-jetbrains text-[11px] tracking-[0.25em] text-stone-500 pt-1">ADDRESS</dt>
                 <dd>{ADDRESS}</dd>
@@ -173,18 +173,18 @@ export default function NoirSections() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-8 border border-white px-6 py-3 font-condensed font-bold tracking-[0.3em] text-sm hover:bg-white hover:text-black transition-colors"
+              className="inline-block mt-8 border border-brand-ink px-6 py-3 font-condensed font-bold tracking-[0.3em] text-sm hover:bg-brand-ink hover:text-brand-cream transition-colors"
             >
               WHATSAPP 預約
             </a>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-20 pt-6 border-t border-white/10 flex flex-wrap gap-x-6 gap-y-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-500">
+        <div className="max-w-6xl mx-auto mt-20 pt-6 border-t border-black/10 flex flex-wrap gap-x-6 gap-y-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-500">
           <span>STUDIO TOOLS</span>
-          <Link href="/bespoke" className="hover:text-white transition-colors">BESPOKE</Link>
-          <Link href="/visual-intelligence" className="hover:text-white transition-colors">AI ADVISOR</Link>
-          <Link href="/ai-advisor" className="hover:text-white transition-colors">AI STYLIST</Link>
+          <Link href="/bespoke" className="hover:text-brand-ink transition-colors">BESPOKE</Link>
+          <Link href="/visual-intelligence" className="hover:text-brand-ink transition-colors">AI ADVISOR</Link>
+          <Link href="/ai-advisor" className="hover:text-brand-ink transition-colors">AI STYLIST</Link>
         </div>
       </section>
     </div>
