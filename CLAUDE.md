@@ -13,6 +13,7 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 - Next.js 16（App Router + Pages API）、Tailwind、Firebase Hosting + Functions v2（`nextServer`，Cloud Run us-central1）、Genkit / Vertex AI。
 - 正式站：https://alexis-bespoke.web.app
 - 指令：`npm run dev`、`npm run build`、`npm run deploy:prod`（一定用呢個，唔好只 deploy hosting）。
+- `deploy:prod` 只 deploy `functions:nextServer,hosting`。Firebase project `alexis-tailor-system-2025` 有 6 個唔屬於呢個 repo 嘅 function（`syncOrderAggregates`、`syncOrderItemAggregates`、`allocateOrderId`、`createStaffAccount`、`geminiProxy`、`listGeminiModels`）；全量 `firebase deploy` 會要求刪除佢哋而失敗。**絕對唔好刪呢啲 function，亦唔好用冇 `--only` 嘅 `firebase deploy`。**
 - 本地 dev 冇 Firebase key 會報 `auth/invalid-api-key`：用假嘅 `NEXT_PUBLIC_FIREBASE_*` 值即可。
 
 ## 安全（必守）
@@ -58,11 +59,12 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 | PR #4 `feat/noir-brand-alignment` | 深色品牌首頁 + `NoirSections.tsx` + lookbook 圖。老闆傾向淺色，可能關閉 |
 | `feat/light-brand-theme` | 淺色版（未開 PR），等底色拍板 |
 | PR #5 `docs/roadmap-brand-alignment` | ROADMAP 品牌對齊路線 12 項 |
-| PR #6 `fix/admin-use-adc-in-cloud` | 修復 `/admin`、`/visual-intelligence` 壞咗（舊 key 刪除後） |
+| PR #6 `fix/admin-use-adc-in-cloud` | ✅ 已合併並 deploy |
+| `chore/deploy-scope-and-health-fix` | `deploy:prod` 限定範圍 + `/api/health` storage 權限修復 |
 
 ## 下一步（按次序）
 
-1. 合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。
+1. ~~合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。~~ ✅ 完成：PR #6 已合併；本地 `.env.production` 已改名做 `.env.production.bak`；已 deploy `functions:nextServer,hosting`；`/admin`、`/visual-intelligence` 正常，`/api/admin/catalog` 讀到 Firestore。`/api/health` storage 檢查權限修復喺 `chore/deploy-scope-and-health-fix`，合併後要再 deploy。
 2. 老闆揀底色後：以 `feat/light-brand-theme` 為基礎開淺色版 PR，關閉 PR #4。
 3. 實現統一選單、首頁四段、THE RULES 獨立頁。
 4. 填真資料：`NoirSections.tsx` 裏 `WHATSAPP_URL`（現為 `https://wa.me/85200000000`）、ADDRESS、HOURS 都係佔位，等老闆提供。
