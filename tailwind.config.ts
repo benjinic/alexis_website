@@ -19,6 +19,10 @@ const config: Config = {
         'inferno': '#A40000',
         'graphite': '#40363E',
         'lava-red': '#F42B26',
+        'brand-cream': '#FAF3E7',
+        'brand-sand': '#F2E3CA',
+        'brand-ink': '#1A1A1A',
+        'brand-accent': '#682872',
         'silver-grey': '#B5B5B5',
         'dirty-grey':'#f9fafa',
 
@@ -71,6 +75,7 @@ const config: Config = {
         roboto: ['var(--font-roboto-mono)', 'monospace'],
         condensed: ['var(--font-roboto-condensed)', 'sans-serif'],
         space: ['var(--font-space-mono)', 'monospace'],
+        'zh-serif': ['"Noto Serif TC"', '"Songti TC"', 'serif'],
       },
       borderRadius: {
         lg: 'var(--radius)',
