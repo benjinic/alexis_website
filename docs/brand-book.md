@@ -1,8 +1,9 @@
-# ALEXIS BESPOKE — Brand Book
-**Digital Protocol for Modern Bespoke Tailoring**
+# ALEXIS 雅思洋服 — Brand Book（網站版）
+**The suit is not the rule. It's the beginning.**
 
-> 版本：1.0 · 最後更新：2026-03-18  
-> 本文件根據現行程式碼（`tailwind.config.ts`、`globals.css`、`layout.tsx`）自動對齊，是唯一顏色與字體的設計真相來源。
+> 版本：1.1 · 最後更新：2026-10-15  
+> **品牌規則以 Brand Book PDF Vol.01 為準**；本文件係網站實作版，同 PDF 有衝突時跟 PDF。  
+> 第 2.0 節係網站用色方向（前舖淺色、工場深色）；第 2.1 節起嘅深色 Token 只適用於工場頁（`/bespoke`、AI 工具頁），數值以 `tailwind.config.ts`、`globals.css` 為準。
 
 ---
 
@@ -21,10 +22,10 @@
 
 ## 1. 品牌定位
 
-**品牌名稱：** ALEXIS BESPOKE  
-**副標：** Digital Protocol for Modern Bespoke Tailoring  
-**核心張力：** 古老工藝 × 冷峻科技感  
-**視覺語言：** 深底、極簡、終端機美學（Terminal Noir）
+**品牌名稱：** ALEXIS 雅思洋服 · EST. 2023 · 香港（對外少用「Bespoke」）  
+**宣言：** The suit is not the rule. It's the beginning.（西裝不是規矩，是起點。）  
+**口號：** **KNOW THE RULES. BREAK ONE.** — 80% 守規矩、20% 破一條  
+**視覺語言：** 前舖淺色、簡潔留白；工場頁保留深底、終端機美學（Terminal Noir）
 
 ### 品牌個性關鍵字
 
@@ -39,9 +40,26 @@
 
 ## 2. 色彩系統
 
-### 2.1 核心調色盤
+### 2.0 網站用色方向（跟 Brand Book PDF）
 
-網站採用**深色優先（Dark-first）**設計。所有顏色均已定義為 Tailwind CSS custom token。
+**前舖淺色、工場深色**：客人頁面用淺色；`/bespoke`、`/visual-intelligence`、`/ai-advisor` 等工場／AI 工具頁保留深色。
+
+| 用途 | 色 | 備註 |
+|------|----|------|
+| 底色 | 暖白 `#FCFAF6` | **待老闆拍板**：建議 B 暖白；另有 A 純白 `#FFFFFF`、C 米色 |
+| 區塊 | 米白 `#FAF3E7` | |
+| 卡片／分隔線 | 米色 `#F2E3CA` | |
+| 文字 | 墨色 `#1A1A1A` | |
+| 強調 | 品牌紫 `#682872` | 每畫面只出現一處 |
+| 工場頁底色 | 墨色 `#1A1A1A` | 熔岩紅只用喺深色頁 |
+
+中文字體：Noto Serif TC（Tailwind `font-zh-serif`）。
+
+> 淺色 Token 同 `font-zh-serif` 暫時只喺 `feat/light-brand-theme`，未入 `main`；底色拍板後由淺色版 PR 加入，再更新本節。
+
+### 2.1 工場頁調色盤（深色）
+
+工場頁採用**深色**設計。所有顏色均已定義為 Tailwind CSS custom token。
 
 #### 背景層
 
@@ -365,21 +383,23 @@ description: Digital Protocol for Modern Bespoke Tailoring
 
 ## 8. 禁止清單
 
-以下設計決策與品牌不符，**不應出現**在任何頁面：
+以下設計決策與品牌不符。標 *（工場頁）* 嘅只適用於深色工場頁；客人頁面跟第 2.0 節淺色方向。
 
 | 禁止 | 原因 |
 |------|------|
 | 圓角卡片（`rounded-xl` 以上） | 過於柔和，失去精工感 |
 | 彩色漸層背景（非 lava 系） | 破壞單色品牌底層 |
-| 白色背景頁面 | 與 Dark-first 品牌方向不符 |
+| 白色背景頁面 *（工場頁）* | 工場頁保留深色；客人頁面反而用淺色 |
 | 中文大標題（無 uppercase 英文版本） | 標題層級保留英文 uppercase |
 | drop shadow on text（body 層級） | 僅大標題可用 drop-shadow |
 | Bounce / Spring animation | 破壞冷峻氛圍 |
 | Rounded button（`rounded-full`） | 品牌使用 sharp / `rounded-sm` |
-| 多色文字 | 只允許 white / muted / lava 三色文字 |
-| 有顏色底色的大面積區塊 | 除 lava CTA 之外，區塊均以深灰/黑為底 |
+| 多色文字 *（工場頁）* | 只允許 white / muted / lava 三色文字 |
+| 有顏色底色的大面積區塊 *（工場頁）* | 除 lava CTA 之外，區塊均以深灰/黑為底 |
+| 熔岩紅用喺淺色頁 | 熔岩紅只屬工場深色頁 |
+| 每畫面多過一處品牌紫 | 品牌紫 `#682872` 每畫面只出現一處 |
 
 ---
 
-*Alexis Bespoke Brand Book · v1.0 · 2026-03-18*  
-*顏色與字體 Token 以 `tailwind.config.ts` 及 `src/app/globals.css` 為準；如有出入，以程式碼為主。*
+*ALEXIS 雅思洋服 Brand Book（網站版）· v1.1 · 2026-10-15*  
+*品牌規則以 Brand Book PDF Vol.01 為準；工場頁 Token 數值以 `tailwind.config.ts` 及 `src/app/globals.css` 為準。*
