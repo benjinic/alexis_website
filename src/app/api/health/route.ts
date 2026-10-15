@@ -26,7 +26,9 @@ export async function GET() {
   }
 
   try {
-    await getStorage(getApp()).bucket(storageBucketName).getMetadata();
+    // getMetadata() 需要 storage.buckets.get 權限；
+    // getFiles() 只需要 storage.objects.list，同 objectViewer role 已有嘅權限對齊。
+    await getStorage(getApp()).bucket(storageBucketName).getFiles({ maxResults: 1 });
     results.storage = true;
   } catch (error) {
     errors.push(`storage:${getErrorMessage(error)}`);

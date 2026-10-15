@@ -7,7 +7,7 @@
     "build": "next build --webpack",
     "build:functions": "npm run check:deploy-runtime && npm run build && rm -rf functions/.next && cp -R .next functions/.next",
     "check:deploy-runtime": "node scripts/check-deploy-runtime.js",
-    "deploy:prod": "npm run check:deploy-runtime && firebase deploy",
+    "deploy:prod": "npm run check:deploy-runtime && firebase deploy --only functions:nextServer,hosting",
     "deploy:hosting": "node scripts/safe-hosting-deploy.js",
     "deploy:hosting:force": "node scripts/safe-hosting-deploy.js --force-hosting-only",
     "deploy:hosting:dry-run": "node scripts/safe-hosting-deploy.js --dry-run",
