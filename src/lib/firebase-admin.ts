@@ -13,8 +13,13 @@ if (!admin.apps.length) {
   try {
     console.log("🔥 [系統啟動] 準備初始化 Firebase Admin...");
 
-    // 🔴 嚴格檢查：必須「信箱」跟「密碼」同時存在，才啟用本地密碼模式
-    const hasLocalKeys = process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL;
+    // ☁️ 喺 Cloud Functions／Cloud Run 上面運行時（K_SERVICE 會自動設定），
+    // 一律用 Google 雲端內置身份 (ADC)，唔再讀私鑰，避免舊私鑰被刪後整個後台失效。
+    const isGoogleCloudRuntime = Boolean(process.env.K_SERVICE || process.env.FUNCTION_TARGET);
+
+    // 🔴 本機開發：必須「信箱」跟「密碼」同時存在，才啟用本地密碼模式
+    const hasLocalKeys =
+      !isGoogleCloudRuntime && process.env.FIREBASE_PRIVATE_KEY && process.env.FIREBASE_CLIENT_EMAIL;
 
     if (hasLocalKeys) {
       console.log("💻 [登入模式] 偵測到完整密碼，使用本地金鑰登入...");
