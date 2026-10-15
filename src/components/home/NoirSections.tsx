@@ -8,7 +8,7 @@ export const WHATSAPP_URL = 'https://wa.me/85200000000';
 const ADDRESS = '[新地址]';
 const HOURS = '[營業時間]';
 
-// 品牌規矩：深色係「規矩」，熔岩紅係「破嗰一條」—— 每一屏最多一樣嘢用紅色。
+// 品牌規矩：白底係「規矩」，品牌紫係「破嗰一條」—— 每一屏最多一樣嘢用紫色。
 
 const PAIRS = [
   {
@@ -51,7 +51,7 @@ export default function NoirSections() {
   const pair = PAIRS[active];
 
   return (
-    <div className="bg-brand-cream text-brand-ink">
+    <div className="bg-brand-paper text-brand-ink">
       {/* 01 THE RULES */}
       <section id="rules" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 max-w-6xl mx-auto">
         <Kicker n="01" label="THE RULES" />
@@ -74,7 +74,7 @@ export default function NoirSections() {
                 aria-selected={i === active}
                 onClick={() => setActive(i)}
                 className={`font-condensed text-sm tracking-[0.25em] px-4 py-2 border transition-colors ${
-                  i === active ? 'bg-brand-ink text-brand-cream border-brand-ink' : 'border-black/20 text-stone-600 hover:text-brand-ink'
+                  i === active ? 'bg-brand-ink text-white border-brand-ink' : 'border-black/20 text-stone-600 hover:text-brand-ink'
                 }`}
               >
                 {p.name}
@@ -107,7 +107,7 @@ export default function NoirSections() {
       </section>
 
       {/* 02 LOOKBOOK */}
-      <section id="lookbook" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 bg-brand-sand">
+      <section id="lookbook" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-32 bg-brand-mist">
         <div className="max-w-6xl mx-auto">
           <Kicker n="02" label="LOOKBOOK" />
           <h2 className="font-condensed font-black text-4xl md:text-6xl tracking-tight leading-[1.05]">
@@ -131,7 +131,7 @@ export default function NoirSections() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-brand-accent text-brand-cream hover:opacity-90 transition-opacity"
+                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-brand-accent text-white hover:opacity-90 transition-opacity"
               >
                 <span className="font-jetbrains text-[11px] tracking-[0.3em]">NO. 8</span>
                 <span className="font-zh-serif text-xl md:text-2xl leading-snug">
@@ -139,7 +139,7 @@ export default function NoirSections() {
                   <br />
                   由你決定。
                 </span>
-                <span className="font-condensed font-bold text-sm tracking-[0.3em] border-t border-brand-cream/50 pt-3">BOOK NOW →</span>
+                <span className="font-condensed font-bold text-sm tracking-[0.3em] border-t border-white/50 pt-3">BOOK NOW →</span>
               </a>
             </li>
           </ul>
@@ -148,7 +148,7 @@ export default function NoirSections() {
       </section>
 
       {/* 03 VISIT */}
-      <section id="visit" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-28 border-t border-black/10">
+      <section id="visit" className="scroll-mt-20 px-4 md:px-12 py-20 md:py-28 border-t border-brand-line">
         <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-12">
           <div>
             <Kicker n="03" label="VISIT" />
@@ -159,7 +159,7 @@ export default function NoirSections() {
             </p>
           </div>
           <div className="font-zh-serif">
-            <dl className="divide-y divide-black/10 border-y border-black/10">
+            <dl className="divide-y divide-brand-line border-y border-brand-line">
               <div className="grid grid-cols-[96px_1fr] gap-4 py-4">
                 <dt className="font-jetbrains text-[11px] tracking-[0.25em] text-stone-500 pt-1">ADDRESS</dt>
                 <dd>{ADDRESS}</dd>
@@ -173,14 +173,14 @@ export default function NoirSections() {
               href={WHATSAPP_URL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-block mt-8 border border-brand-ink px-6 py-3 font-condensed font-bold tracking-[0.3em] text-sm hover:bg-brand-ink hover:text-brand-cream transition-colors"
+              className="inline-block mt-8 border border-brand-ink px-6 py-3 font-condensed font-bold tracking-[0.3em] text-sm hover:bg-brand-ink hover:text-white transition-colors"
             >
               WHATSAPP 預約
             </a>
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-20 pt-6 border-t border-black/10 flex flex-wrap gap-x-6 gap-y-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-500">
+        <div className="max-w-6xl mx-auto mt-20 pt-6 border-t border-brand-line flex flex-wrap gap-x-6 gap-y-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-500">
           <span>STUDIO TOOLS</span>
           <Link href="/bespoke" className="hover:text-brand-ink transition-colors">BESPOKE</Link>
           <Link href="/visual-intelligence" className="hover:text-brand-ink transition-colors">AI ADVISOR</Link>

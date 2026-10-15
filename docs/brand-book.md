@@ -46,16 +46,16 @@
 
 | 用途 | 色 | 備註 |
 |------|----|------|
-| 底色 | 暖白 `#FCFAF6` | **待老闆拍板**：建議 B 暖白；另有 A 純白 `#FFFFFF`、C 米色 |
-| 區塊 | 米白 `#FAF3E7` | |
-| 卡片／分隔線 | 米色 `#F2E3CA` | |
-| 文字 | 墨色 `#1A1A1A` | |
-| 強調 | 品牌紫 `#682872` | 每畫面只出現一處 |
+| 底色 | 白 `#FFFFFF`（`brand-paper`） | 2026-10-15 定案 W1：白色為主調 |
+| 區塊 | 中性淺灰 `#F5F5F5`（`brand-mist`） | |
+| 分隔線 | 淺灰 `#E6E6E6`（`brand-line`） | |
+| 文字 | 墨色 `#1A1A1A`（`brand-ink`） | |
+| 強調 | 品牌紫 `#682872`（`brand-accent`） | 用喺 BOOK NOW 底色；每畫面只出現一處 |
 | 工場頁底色 | 墨色 `#1A1A1A` | 熔岩紅只用喺深色頁 |
 
 中文字體：Noto Serif TC（Tailwind `font-zh-serif`）。
 
-> 淺色 Token 同 `font-zh-serif` 暫時只喺 `feat/light-brand-theme`，未入 `main`；底色拍板後由淺色版 PR 加入，再更新本節。
+> 早前 PDF 嘅米白 `#FAF3E7`、米色 `#F2E3CA` 唔再用喺網站。
 
 ### 2.1 工場頁調色盤（深色）
 

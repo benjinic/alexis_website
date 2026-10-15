@@ -84,8 +84,7 @@ export default function Header() {
 
           <Link href="/booking" className="hidden sm:block">
             <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-stone-950 font-mono tracking-widest text-[10px] h-8 px-4 transition-all"
+              className="bg-brand-accent text-white hover:bg-brand-accent/90 rounded-none font-mono tracking-widest text-[10px] h-8 px-4 transition-all"
             >
               BOOK NOW
             </Button>

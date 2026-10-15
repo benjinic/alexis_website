@@ -30,7 +30,7 @@ export default function Home() {
   return (
     <>
     {/* 底層背景色設定為 bg-carbon-black，影片淡出後就會顯露這個顏色 */}
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-cream transition-colors duration-1000">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-paper transition-colors duration-1000">
       
       {/* 🎬 滿版背景短片 */}
       <video
@@ -48,7 +48,7 @@ export default function Home() {
 
       {/* 🛡️ 漸層遮罩：加入淡出效果，讓影片消失後背景純色更乾淨 */}
       <div 
-        className={`absolute inset-0 bg-gradient-to-b from-brand-cream/60 via-brand-cream/40 to-brand-cream/90 z-0 pointer-events-none transition-opacity [transition-duration:2000ms] ease-in-out ${
+        className={`absolute inset-0 bg-gradient-to-b from-brand-paper/60 via-brand-paper/40 to-brand-paper/90 z-0 pointer-events-none transition-opacity [transition-duration:2000ms] ease-in-out ${
           isVideoEnded ? 'opacity-0' : 'opacity-100'
         }`} 
       />
@@ -86,7 +86,7 @@ export default function Home() {
       <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 z-10 text-right">
         <h1 className="text-3xl md:text-4xl font-black font-condensed tracking-tighter text-brand-ink">
           <span className="block mb-1">KNOW THE RULES.</span>
-          <span className="block text-brand-accent">BREAK ONE.</span>
+          <span className="block">BREAK ONE.</span>
         </h1>
         <p className="hidden md:block font-jetbrains text-stone-500 text-[10px] tracking-[0.3em] mt-4 border-t border-carbon-black/20 pt-2">
           EST. 2023 / HONG KONG
