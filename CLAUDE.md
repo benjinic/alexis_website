@@ -56,8 +56,8 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 
 | 項目 | 狀態 |
 |---|---|
-| PR #4 `feat/noir-brand-alignment` | 深色品牌首頁 + `NoirSections.tsx` + lookbook 圖。老闆傾向淺色，可能關閉 |
-| `feat/light-theme-w1` | 淺色版 W1（基於 `feat/light-brand-theme`），取代 PR #4 |
+| PR #4 `feat/noir-brand-alignment` | ❌ 已關閉（2026-10-17），由 PR #10 取代；分支保留作參考 |
+| PR #10 `feat/light-theme-w1` | 淺色版 W1（基於 `feat/light-brand-theme`），取代 PR #4 |
 | PR #5 `docs/roadmap-brand-alignment` | ROADMAP 品牌對齊路線 12 項 |
 | PR #6 `fix/admin-use-adc-in-cloud` | ✅ 已合併並 deploy |
 | PR #8 `chore/deploy-scope-and-health-fix` | ✅ 已合併並 deploy；`/api/health` 返 200（firestore、storage 都 true） |
@@ -66,7 +66,7 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 ## 下一步（按次序）
 
 1. ~~合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。~~ ✅ 完成：PR #6 已合併；本地 `.env.production` 已改名做 `.env.production.bak`；已 deploy `functions:nextServer,hosting`；`/admin`、`/visual-intelligence` 正常，`/api/admin/catalog` 讀到 Firestore。`/api/health` storage 權限修復（PR #8）已合併並 deploy，返 200。
-2. ~~老闆揀底色後開淺色版 PR，關閉 PR #4。~~ 已揀 W1，淺色版 PR 見 `feat/light-theme-w1`。
+2. ~~老闆揀底色後開淺色版 PR，關閉 PR #4。~~ 已揀 W1，淺色版 PR #10；PR #4 已關閉。
 3. 實現統一選單、首頁四段、THE RULES 獨立頁。
 4. 填真資料：`NoirSections.tsx` 裏 `WHATSAPP_URL`（現為 `https://wa.me/85200000000`）、ADDRESS、HOURS 都係佔位，等老闆提供。
 5. ~~同步 `docs/brand-book.md` 到上面用色。~~ ✅ 第 1、2、8 節已對齊 PDF（`docs/sync-brand-book-palette`）；底色拍板後再更新第 2.0 節。
