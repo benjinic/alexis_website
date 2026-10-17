@@ -47,8 +47,8 @@ export default function Header() {
             <span className="font-space_mono font-bold text-xl md:text-2xl tracking-tighter text-white">
               ALEXIS
             </span>
-            <span className="text-[10px] md:text-xs font-mono font-normal tracking-[0.3em] text-white mt-1 transition-colors">
-              BESPOKE
+            <span className="text-[10px] md:text-xs font-zh-serif font-normal tracking-[0.3em] text-white mt-1 transition-colors">
+              雅思洋服
             </span>
           </Link>
         </div>
@@ -84,8 +84,7 @@ export default function Header() {
 
           <Link href="/booking" className="hidden sm:block">
             <Button 
-              variant="outline" 
-              className="border-white text-white hover:bg-white hover:text-stone-950 font-mono tracking-widest text-[10px] h-8 px-4 transition-all"
+              className="bg-brand-accent text-white hover:bg-brand-accent/90 rounded-none font-mono tracking-widest text-[10px] h-8 px-4 transition-all"
             >
               BOOK NOW
             </Button>
