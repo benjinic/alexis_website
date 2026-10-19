@@ -4,7 +4,7 @@ import { db } from '@/lib/firebase-admin';
 import nodemailer from 'nodemailer';
 
 // 您的 WhatsApp 連結
-const WHATSAPP_LINK = 'https://wa.me/85212345678'; 
+const WHATSAPP_LINK = 'https://wa.me/85297031920'; 
 
 export async function createBooking(prevState: any, formData: FormData) {
   const name = formData.get('name') as string;
