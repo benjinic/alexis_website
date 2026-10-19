@@ -68,8 +68,14 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 1. ~~合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。~~ ✅ 完成：PR #6 已合併；本地 `.env.production` 已改名做 `.env.production.bak`；已 deploy `functions:nextServer,hosting`；`/admin`、`/visual-intelligence` 正常，`/api/admin/catalog` 讀到 Firestore。`/api/health` storage 權限修復（PR #8）已合併並 deploy，返 200。
 2. ~~老闆揀底色後開淺色版 PR，關閉 PR #4。~~ 已揀 W1，淺色版 PR #10；PR #4 已關閉。
 3. 實現統一選單、首頁四段、THE RULES 獨立頁。
-4. 填真資料：`NoirSections.tsx` 裏 `WHATSAPP_URL`（現為 `https://wa.me/85200000000`）、ADDRESS、HOURS 都係佔位，等老闆提供。
+4. ~~填真資料：`NoirSections.tsx` 裏 `WHATSAPP_URL`、ADDRESS、HOURS。~~ ✅ 2026-10-19 已填（PR #10）。
 5. ~~同步 `docs/brand-book.md` 到上面用色。~~ ✅ 第 1、2、8 節已對齊 PDF（`docs/sync-brand-book-palette`）；底色拍板後再更新第 2.0 節。
+
+## 門市資料（老闆提供）
+
+- 地址：中環永吉街 18–24 號永富大廈 602 室／Room 02, 6/F, Wing Fu Building, 18–24 Wing Kut Street, Central, Hong Kong
+- 電話／WhatsApp：9703 1920 → `https://wa.me/85297031920`
+- 營業時間（2026-10-19）：星期一至六 11:00–19:00；星期日及公眾假期預約
 
 ## 參考文件（claude.ai）
 

@@ -4,9 +4,11 @@ import { useState } from 'react';
 import Link from 'next/link';
 
 // 待填：開帳前換成真實資料
-export const WHATSAPP_URL = 'https://wa.me/85200000000';
-const ADDRESS = '[新地址]';
-const HOURS = '[營業時間]';
+export const WHATSAPP_URL = 'https://wa.me/85297031920';
+const ADDRESS =
+  '中環永吉街 18–24 號永富大廈 602 室\nRoom 02, 6/F, Wing Fu Building, 18–24 Wing Kut Street, Central, Hong Kong';
+const HOURS =
+  '星期一至六 11:00–19:00\n星期日及公眾假期預約\nMon–Sat 11am–7pm · Sun & public holidays by appointment';
 
 // 品牌規矩：白底係「規矩」，品牌紫係「破嗰一條」—— 每一屏最多一樣嘢用紫色。
 
@@ -162,11 +164,11 @@ export default function NoirSections() {
             <dl className="divide-y divide-brand-line border-y border-brand-line">
               <div className="grid grid-cols-[96px_1fr] gap-4 py-4">
                 <dt className="font-jetbrains text-[11px] tracking-[0.25em] text-stone-500 pt-1">ADDRESS</dt>
-                <dd>{ADDRESS}</dd>
+                <dd className="whitespace-pre-line">{ADDRESS}</dd>
               </div>
               <div className="grid grid-cols-[96px_1fr] gap-4 py-4">
                 <dt className="font-jetbrains text-[11px] tracking-[0.25em] text-stone-500 pt-1">HOURS</dt>
-                <dd>{HOURS}</dd>
+                <dd className="whitespace-pre-line">{HOURS}</dd>
               </div>
             </dl>
             <a
