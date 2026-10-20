@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import NoirSections from '@/components/home/NoirSections';
 import { WHATSAPP_URL } from '@/lib/shop';
 
 export default function Home() {
@@ -11,12 +10,13 @@ export default function Home() {
   // 🎬 狀態：用來記錄影片是否已經播完
   const [isVideoEnded, setIsVideoEnded] = useState(false);
 
-  // 主選單只放品牌內容；Bespoke、AI 工具移到首頁底部
+  // 首頁只得一屏：主選單入各個獨立頁（唔做長下拉）；Bespoke、AI 工具喺 VISIT 頁底同側邊選單
   const menuItems = [
-    { label: 'THE RULES', href: '#rules' },
-    { label: 'LOOKBOOK', href: '#lookbook' },
+    { label: 'THE RULES', href: '/rules' },
+    { label: 'LOOKBOOK', href: '/lookbook' },
     { label: 'PROCESS', href: '/process' },
     { label: 'CLOTH', href: '/catalog' },
+    { label: 'VISIT', href: '/visit' },
     { label: 'BOOK NOW', href: WHATSAPP_URL },
   ];
 
@@ -31,7 +31,7 @@ export default function Home() {
   return (
     <>
     {/* 底層背景色設定為 bg-carbon-black，影片淡出後就會顯露這個顏色 */}
-    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden bg-brand-paper transition-colors duration-1000">
+    <section className="relative min-h-[100svh] flex flex-col items-center justify-center overflow-hidden bg-brand-paper transition-colors duration-1000">
       
       {/* 🎬 滿版背景短片 */}
       <video
@@ -102,7 +102,6 @@ export default function Home() {
       </div>
 
     </section>
-    <NoirSections />
     </>
   );
 }

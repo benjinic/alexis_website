@@ -46,9 +46,10 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 
 ### 頁面架構（設計報告定案方向）
 
-- 統一選單（Header 同首頁共用）：THE RULES · LOOKBOOK · PROCESS · CLOTH · BOOK NOW。
-- 首頁四段：主視覺角色輪播 → 角色精選 → At Your Service（度身／WhatsApp 預約／AI 造型）→ 到訪門市。
+- **唔做長下拉網站（老闆 2026-10-20 決定）**：首頁只得一屏（主視覺 + 選單），每個品牌頁自成一屏，唔加頁尾；內容多嘅（LOOKBOOK）用左右滑動，唔好向下碌。改版面時要喺 1440×900、375×812、375×667 量過冇多出嚟嘅捲動。
+- 統一選單（首頁同側邊選單共用）：THE RULES `/rules` · LOOKBOOK `/lookbook` · PROCESS · CLOTH `/catalog` · VISIT `/visit` · BOOK NOW；側邊選單下面另有 STUDIO TOOLS 一組。
 - THE RULES 獨立頁：完整宣言 + 守規矩／破一條對照（ADRIAN、LEON、LUCIEN）。
+- 三個品牌頁嘅內容喺 `src/components/home/NoirSections.tsx`（`RulesSection`、`LookbookSection`、`VisitSection`）。
 - 工具頁：`/bespoke`、`/visual-intelligence`、`/ai-advisor` 由 Studio Tools 同頁尾進入；5 個客製入口合併到 `/bespoke`。
 - `/bespoke/roadmap`、`/blueprint` 要登入先睇到；`/admin` 不變。
 - 版面參考 Angelil 的簡潔；Zegna、WACKO MARIA 作氣質參考，不對外引用。
@@ -65,13 +66,14 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 | PR #10 `feat/light-theme-w1` | ✅ 已合併並 deploy（2026-10-20）：淺色版 W1 首頁 |
 | PR #11 `docs/claude-md-shop-info` | 門市資料已寫入本檔「門市資料」一節，呢個 PR 可以關閉 |
 | PR #12 `fix/shop-info-from-card` | ✅ 已合併並 deploy（2026-10-20）：VISIT 區用名片地址、電話、WhatsApp |
-| `fix/homepage-layout-polish` | 版面修正：頁尾對比度同撳掣大小、每畫面一處紫色、手機主視覺提早淡出；門市資料集中到 `src/lib/shop.ts` |
+| PR #13 `fix/homepage-layout-polish` | ✅ 已合併並 deploy（2026-10-20）：頁尾對比度同撳掣大小、每畫面一處紫色、手機主視覺提早淡出；門市資料集中到 `src/lib/shop.ts` |
+| `feat/split-brand-pages` | 唔做長下拉：首頁一屏，拆出 `/rules`、`/lookbook`、`/visit` 獨立頁 |
 
 ## 下一步（按次序）
 
 1. ~~合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。~~ ✅ 完成：PR #6 已合併；本地 `.env.production` 已改名做 `.env.production.bak`；已 deploy `functions:nextServer,hosting`；`/admin`、`/visual-intelligence` 正常，`/api/admin/catalog` 讀到 Firestore。`/api/health` storage 權限修復（PR #8）已合併並 deploy，返 200。
 2. ~~老闆揀底色後開淺色版 PR，關閉 PR #4。~~ 已揀 W1，淺色版 PR #10；PR #4 已關閉。
-3. 實現統一選單、首頁四段、THE RULES 獨立頁。
+3. ~~實現統一選單、首頁四段、THE RULES 獨立頁。~~ 改為獨立頁（`feat/split-brand-pages`）：首頁一屏，`/rules`、`/lookbook`、`/visit` 各自一屏；統一選單已套用到首頁同側邊選單。仲未做：頁頂 header 嘅 BOOK NOW 同側邊選單 BOOK NOW 去 `/booking`，首頁 BOOK NOW 去 WhatsApp，兩個入口未統一。
 4. ~~填真資料~~ ✅ 地址、電話、WhatsApp 已用老闆名片（PR #12）；資料而家集中喺 `src/lib/shop.ts`。仲欠：營業時間（暫寫「預約制」）、Instagram／Facebook 網址（未有網址嘅頁尾唔顯示）。
 5. ~~同步 `docs/brand-book.md` 到上面用色。~~ ✅ 第 1、2、8 節已對齊 PDF（`docs/sync-brand-book-palette`）；底色拍板後再更新第 2.0 節。
 
