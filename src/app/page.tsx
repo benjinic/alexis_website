@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
-import NoirSections, { WHATSAPP_URL } from '@/components/home/NoirSections';
+import NoirSections from '@/components/home/NoirSections';
+import { WHATSAPP_URL } from '@/lib/shop';
 
 export default function Home() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
@@ -38,6 +39,13 @@ export default function Home() {
         muted
         playsInline
         onEnded={() => setIsVideoEnded(true)}
+        // 📱 窄屏只見到畫面中間約四分一，人物最後一秒會行出畫面；提早淡出，等佢喺畫面內消失
+        onTimeUpdate={(e) => {
+          const v = e.currentTarget;
+          if (!isVideoEnded && v.duration - v.currentTime < 1.2 && window.matchMedia('(max-width: 767px)').matches) {
+            setIsVideoEnded(true);
+          }
+        }}
         className={`absolute inset-0 w-full h-full object-cover z-0 transition-opacity [transition-duration:2000ms] ease-in-out ${
           isVideoEnded ? 'opacity-0' : 'opacity-25'
         }`}

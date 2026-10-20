@@ -13,6 +13,7 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 - Next.js 16（App Router + Pages API）、Tailwind、Firebase Hosting + Functions v2（`nextServer`，Cloud Run us-central1）、Genkit / Vertex AI。
 - 正式站：https://alexis-bespoke.web.app
 - 指令：`npm run dev`、`npm run build`、`npm run deploy:prod`（一定用呢個，唔好只 deploy hosting）。
+- 工具鏈：nvm default 設咗做 `system`，即用 `/usr/local/bin` 嘅 Node 22.19 / npm / firebase（2026-10-20 修復，舊 nvm 版本曾經壞咗）。
 - `deploy:prod` 只 deploy `functions:nextServer,hosting`。Firebase project `alexis-tailor-system-2025` 有 6 個唔屬於呢個 repo 嘅 function（`syncOrderAggregates`、`syncOrderItemAggregates`、`allocateOrderId`、`createStaffAccount`、`geminiProxy`、`listGeminiModels`）；全量 `firebase deploy` 會要求刪除佢哋而失敗。**絕對唔好刪呢啲 function，亦唔好用冇 `--only` 嘅 `firebase deploy`。**
 - 本地 dev 冇 Firebase key 會報 `auth/invalid-api-key`：用假嘅 `NEXT_PUBLIC_FIREBASE_*` 值即可。
 
@@ -57,19 +58,29 @@ Claude Code 每次開工會先讀呢個檔案。內容係網站工作嘅交接�
 | 項目 | 狀態 |
 |---|---|
 | PR #4 `feat/noir-brand-alignment` | ❌ 已關閉（2026-10-17），由 PR #10 取代；分支保留作參考 |
-| PR #10 `feat/light-theme-w1` | 淺色版 W1（基於 `feat/light-brand-theme`），取代 PR #4 |
-| PR #5 `docs/roadmap-brand-alignment` | ROADMAP 品牌對齊路線 12 項 |
+| PR #5 `docs/roadmap-brand-alignment` | ROADMAP 品牌對齊路線 12 項（未合併） |
 | PR #6 `fix/admin-use-adc-in-cloud` | ✅ 已合併並 deploy |
 | PR #8 `chore/deploy-scope-and-health-fix` | ✅ 已合併並 deploy；`/api/health` 返 200（firestore、storage 都 true） |
-| `docs/sync-brand-book-palette` | `docs/brand-book.md` 同步 PDF 用色（下一步第 5 項） |
+| PR #9 `docs/sync-brand-book-palette` | ✅ 已合併；`docs/brand-book.md` 同步 PDF 用色 |
+| PR #10 `feat/light-theme-w1` | ✅ 已合併並 deploy（2026-10-20）：淺色版 W1 首頁 |
+| PR #11 `docs/claude-md-shop-info` | 門市資料已寫入本檔「門市資料」一節，呢個 PR 可以關閉 |
+| PR #12 `fix/shop-info-from-card` | ✅ 已合併並 deploy（2026-10-20）：VISIT 區用名片地址、電話、WhatsApp |
+| `fix/homepage-layout-polish` | 版面修正：頁尾對比度同撳掣大小、每畫面一處紫色、手機主視覺提早淡出；門市資料集中到 `src/lib/shop.ts` |
 
 ## 下一步（按次序）
 
 1. ~~合併 PR #6 → 從本地 `.env.production` 移除 `FIREBASE_PRIVATE_KEY` / `FIREBASE_CLIENT_EMAIL` → `npm run deploy:prod` → 測試 `/admin`、`/visual-intelligence`。~~ ✅ 完成：PR #6 已合併；本地 `.env.production` 已改名做 `.env.production.bak`；已 deploy `functions:nextServer,hosting`；`/admin`、`/visual-intelligence` 正常，`/api/admin/catalog` 讀到 Firestore。`/api/health` storage 權限修復（PR #8）已合併並 deploy，返 200。
 2. ~~老闆揀底色後開淺色版 PR，關閉 PR #4。~~ 已揀 W1，淺色版 PR #10；PR #4 已關閉。
 3. 實現統一選單、首頁四段、THE RULES 獨立頁。
-4. 填真資料：`NoirSections.tsx` 裏 `WHATSAPP_URL`（現為 `https://wa.me/85200000000`）、ADDRESS、HOURS 都係佔位，等老闆提供。
+4. ~~填真資料~~ ✅ 地址、電話、WhatsApp 已用老闆名片（PR #12）；資料而家集中喺 `src/lib/shop.ts`。仲欠：營業時間（暫寫「預約制」）、Instagram／Facebook 網址（未有網址嘅頁尾唔顯示）。
 5. ~~同步 `docs/brand-book.md` 到上面用色。~~ ✅ 第 1、2、8 節已對齊 PDF（`docs/sync-brand-book-palette`）；底色拍板後再更新第 2.0 節。
+
+## 門市資料（2026-10 老闆名片）
+
+- 地址：中環永吉街 18–24 號永富大廈 602 室／Room 02, 6/F, Wing Fu Building, 18–24 Wing Kut Street, Central, Hong Kong
+- 電話／WhatsApp：9703 1920 → `https://wa.me/85297031920`
+- 營業時間：待提供（暫寫「預約制 / By appointment」）
+- 程式入面只喺 `src/lib/shop.ts` 改，首頁、頁尾、預約電郵都讀呢度。
 
 ## 參考文件（claude.ai）
 
