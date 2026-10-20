@@ -3,14 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 
-// 門市資料（老闆名片，2026-10）；營業時間未定，暫寫預約制
-export const WHATSAPP_URL = 'https://wa.me/85297031920';
-const ADDRESS = '中環永吉街 18–24 號永富大廈 602 室';
-const ADDRESS_EN = 'Room 02, 6/F, Wing Fu Building, 18–24 Wing Kut Street, Central, Hong Kong';
-const PHONE = '9703 1920';
-const PHONE_URL = 'tel:+85297031920';
-const HOURS = '預約制';
-const HOURS_EN = 'By appointment';
+import { WHATSAPP_URL, ADDRESS, ADDRESS_EN, PHONE, PHONE_URL, HOURS, HOURS_EN } from '@/lib/shop';
 
 // 品牌規矩：白底係「規矩」，品牌紫係「破嗰一條」—— 每一屏最多一樣嘢用紫色。
 
@@ -135,7 +128,7 @@ export default function NoirSections() {
                 href={WHATSAPP_URL}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-brand-accent text-white hover:opacity-90 transition-opacity"
+                className="flex flex-col justify-between aspect-[4/5] p-5 md:p-7 bg-brand-ink text-white hover:opacity-90 transition-opacity"
               >
                 <span className="font-jetbrains text-[11px] tracking-[0.3em]">NO. 8</span>
                 <span className="font-zh-serif text-xl md:text-2xl leading-snug">
@@ -196,11 +189,11 @@ export default function NoirSections() {
           </div>
         </div>
 
-        <div className="max-w-6xl mx-auto mt-20 pt-6 border-t border-brand-line flex flex-wrap gap-x-6 gap-y-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-500">
-          <span>STUDIO TOOLS</span>
-          <Link href="/bespoke" className="hover:text-brand-ink transition-colors">BESPOKE</Link>
-          <Link href="/visual-intelligence" className="hover:text-brand-ink transition-colors">AI ADVISOR</Link>
-          <Link href="/ai-advisor" className="hover:text-brand-ink transition-colors">AI STYLIST</Link>
+        <div className="max-w-6xl mx-auto mt-20 pt-4 border-t border-brand-line flex flex-wrap items-center gap-x-2 font-jetbrains text-[11px] tracking-[0.25em] text-stone-600">
+          <span className="mr-4">STUDIO TOOLS</span>
+          <Link href="/bespoke" className="inline-flex items-center min-h-11 px-2 hover:text-brand-ink transition-colors">BESPOKE</Link>
+          <Link href="/visual-intelligence" className="inline-flex items-center min-h-11 px-2 hover:text-brand-ink transition-colors">AI ADVISOR</Link>
+          <Link href="/ai-advisor" className="inline-flex items-center min-h-11 px-2 hover:text-brand-ink transition-colors">AI STYLIST</Link>
         </div>
       </section>
     </div>
