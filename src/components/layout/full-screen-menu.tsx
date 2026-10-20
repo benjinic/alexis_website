@@ -14,13 +14,19 @@ export function FullScreenMenu() {
   const [isOpen, setIsOpen] = useState(false);
 
   // // 定義導航清單數據，集中管理連結路徑與標籤，確保全站導航結構統一 //
+  // 統一選單：同首頁一致嘅品牌頁行先，工具頁放喺 STUDIO TOOLS 一組
   const menuItems = [
-    { label: 'CATALOG', href: '/catalog' },
+    { label: 'THE RULES', href: '/rules' },
+    { label: 'LOOKBOOK', href: '/lookbook' },
     { label: 'PROCESS', href: '/process' },
+    { label: 'CLOTH', href: '/catalog' },
+    { label: 'VISIT', href: '/visit' },
+    { label: 'BOOK NOW', href: '/booking' },
+  ];
+  const toolItems = [
     { label: 'BESPOKE', href: '/bespoke' },
     { label: 'FABRIC LAB', href: '/fabric-lab' },
     { label: 'AI ADVISOR', href: '/visual-intelligence' },
-    { label: 'BOOK NOW', href: '/booking' },
   ];
 
   return (
@@ -54,7 +60,7 @@ export function FullScreenMenu() {
           </div>
 
         
-          <nav className="flex-1 overflow-y-auto py-4 px-4 space-y-6">
+          <nav className="flex-1 overflow-y-auto py-4 px-4 space-y-4">
             {menuItems.map((item, index) => (
               <div key={index} className="group">
                 
@@ -71,10 +77,24 @@ export function FullScreenMenu() {
                 </Link>
               
                 {index !== menuItems.length - 1 && (
-                  <Separator className="mt-6 bg-white" />
+                  <Separator className="mt-4 bg-white" />
                 )}
               </div>
             ))}
+
+            <div className="pt-4 border-t border-stone-200">
+              <p className="font-jetbrains text-[11px] tracking-[0.3em] text-stone-500 mb-1">STUDIO TOOLS</p>
+              {toolItems.map((item) => (
+                <Link
+                  key={item.href}
+                  href={item.href}
+                  onClick={() => setIsOpen(false)}
+                  className="flex items-center min-h-11 font-roboto-condensed font-bold text-lg text-stone-700 hover:text-carbon-black transition-colors"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </div>
           </nav>
 
           
