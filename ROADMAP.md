@@ -4,6 +4,64 @@
 
 ---
 
+## 🎯 品牌對齊路線（2026-10-13）
+
+> 原則：**保留全部現有功能與 Terminal Noir 設計**，以 Brand Book 的「Know the rules. Break one.」重新包裝。
+> 深色＝規矩（八分紀律），熔岩紅＝破一條（兩分破格）；每一屏最多一樣東西用紅色。
+
+### 系統概念對照
+
+| 系統原有 | 品牌意思 |
+|---|---|
+| Protocol（協定） | 規矩：合身、比例、正確做法 |
+| Constraint 引擎（`restrict[]` / `autoChange[]`） | 守規矩：不合理的組合自動擋住 |
+| Override | **BREAK ONE**：每套只准破一條 |
+
+### 各功能修改方向
+
+1. **`/bespoke` 客製化（保留，主打）**
+   - [ ] CUSTOMIZE 之後新增 **BREAK ONE** 一步：由破位清單選一項（開領不打領帶、白襪、針織 polo、鴨舌扁帽、白 T 恤代替恤衫等）。
+   - [ ] Constraint 新增規則：破位最多一項；選第二項時以 `autoChange[]` 自動替換第一項，不另寫新引擎。
+   - [ ] 新增七個角色預設（MARCEL / LEON / SILAS / ADRIAN / ELIAS / LUCIEN / DANTE），支援 `/bespoke?preset=leon`。
+2. **首頁 Lookbook ↔ Bespoke 互通**
+   - [ ] 每張角色卡加「用這套開始」，連到對應 preset。IG 角色 → 網站 → 客製化串成一條路。
+3. **`/visual-intelligence` AI 造型分析（保留）**
+   - [ ] 只改 prompt 與輸出格式：先列出「守了哪幾條規矩」，再建議**只破一條**；輸出固定為「規矩／破」兩行。
+4. **`/ai-advisor` AI Stylist（保留）**
+   - [ ] 統一名稱為 AI STYLIST（首頁原有「SUMMOR TAILOR」為錯字，已於 PR #4 處理）。
+   - [ ] 語氣跟 IG 文案：短、肯定、不推銷；知識範圍限 Brand Book 與七個角色；每個建議＝八分紀律＋一條破位。
+5. **`/booking`（目前為示意表格，開帳前最急）**
+   - [ ] 第一步：送出時開啟 WhatsApp，自動帶入姓名、衣服類型、所選布料或角色；不需後端。
+   - [ ] 第二步：寫入 Firestore，沿用 Resend 寄出確認電郵。
+6. **Stripe 金流（調整 Phase 1 #2）**
+   - [ ] 第一階段只收**訂金／量身預約費**，全數於舖內收取；保留「付款後才成立訂單」概念，降低退款風險。
+7. **My Wardrobe 訂單追蹤（Phase 2 #4，保留）**
+   - [ ] 每個狀態加品牌文案（例：CUTTING —「規矩，由第一剪開始。」）。
+   - [ ] 每張訂單顯示「你破了的規矩」，方便客人重訂。
+8. **多語系（Phase 3 #6，提前一半）**
+   - [ ] 先做首頁、`/process`、`/booking` 中英切換（IG 已中英並列，並有遊客預約文案）；多幣別仍留 Phase 3。
+9. **`/process`（靜態頁）**
+   - [ ] 改為與 IG 一致的三步：預約 → 量身・選布 → 試身・取衣，配店內實拍。
+10. **`/catalog` → CLOTH**
+    - [ ] 用布料實拍；每塊布註明適合的角色（例：炭灰粗花呢 → LEON）。
+11. **開場短片與大型媒體檔（合併「下週執行清單 #3」）**
+    - [ ] 改為七個角色「守規矩 → 破一條」短片，並移到 Firebase Storage／CDN，不再放 repo。
+12. **安全（最優先）**
+    - [x] `.env.production` 停止追蹤並加入 `.gitignore`（PR #2，2026-10-13 已合併）。
+    - [x] 舊 Firebase 私鑰已於 Google Cloud 刪除（2026-10-13）；git 歷史中的舊私鑰已失效，毋須改寫歷史。
+    - [ ] 刪除後測試 `/visual-intelligence` 與 `/admin`，確認 Cloud Functions 以 ADC 正常運作。
+
+### 時間表（配合 2026-11-02 IG 開帳）
+
+| 時間 | 項目 |
+|---|---|
+| 開帳前（10 月） | #12 測試 ADC（私鑰已更換、PR #2 已合併）；合併 PR #4 並填 WhatsApp／地址／營業時間；#5 第一步 |
+| 11 月（網站推廣） | #9、#1、#2、#11 |
+| 12 月 | #7、#3、#4、#8 |
+| 2027 Q1 | #6、多幣別 |
+
+---
+
 ## 🔎 Current Status
 
 目前生產環境部署穩定，`/visual-intelligence` 與 `/api/look-analysis` 線上 smoke test 維持 `200`。本週已完成 `HANDBOOK/README` 去重、`collection/bespoke` 重複碼清理、`/collection -> /bespoke` 導流收斂、Bespoke 模組化重構（配置抽離 + 三組件拆分）、FABRIC 視窗滾動修正，以及正式 deploy；接下來重點是 `/bespoke` runtime 資產路徑最終驗證、大型媒體檔案策略與會員中心功能深化。
